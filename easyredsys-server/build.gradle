@@ -1,0 +1,29 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+dependencies {
+
+    compile project(':easyredsys-client')
+
+    // Moxy is used to bind JAXB to JSON
+    compile ('org.glassfish.jersey.media:jersey-media-moxy:2.22.2')
+
+    // TODO - Ver si sustituir la librería anterior por esta otra
+    //compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.moxy', version: '2.6.3'
+
+    // Web service axis redsys
+    compile 'org.apache.axis:axis:1.4'
+    compile 'org.apache.axis:axis-jaxrpc:1.4'
+
+    // JAX-RS 2.0(.1)
+    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+
+    // Servlet 3
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+
+    compile group: 'org.glassfish.gmbal', name: 'gmbal', version: '4.0.0-b001'
+
+    compile group: 'org.reflections', name: 'reflections', version: '0.9.10'
+}
+

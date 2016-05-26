@@ -1,0 +1,26 @@
+allprojects {
+    group 'com.miguelangeljulvez.easyredsys'
+    version '1.0.0'
+
+    buildscript {
+        repositories {
+            jcenter()
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    def environment = 'dev'
+    if (project.hasProperty('env') && project.getProperty('env')) {
+        environment = project.getProperty('env')
+    }
+
+    project.ext.set("environment", environment)
+}
+

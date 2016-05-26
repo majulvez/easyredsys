@@ -1,0 +1,3 @@
+rootProject.name = 'easyredsys'
+
+include 'easyredsys-client', 'easyredsys-server', 'integration-example-war'

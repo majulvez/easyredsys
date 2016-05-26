@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <!-- web services axis -->
+
+    <listener>
+        <listener-class>org.apache.axis.transport.http.AxisHTTPSessionListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>AxisServlet</servlet-name>
+        <servlet-class>
+            org.apache.axis.transport.http.AxisServlet
+        </servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>
+            org.apache.axis.transport.http.AdminServlet
+        </servlet-class>
+        <load-on-startup>100</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>SOAPMonitorService</servlet-name>
+        <servlet-class>
+            org.apache.axis.monitor.SOAPMonitorService
+        </servlet-class>
+        <init-param>
+            <param-name>SOAPMonitorPort</param-name>
+            <param-value>5001</param-value>
+        </init-param>
+        <load-on-startup>100</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>/servlet/AxisServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>*.jws</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/servlet/AdminServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>SOAPMonitorService</servlet-name>
+        <url-pattern>/SOAPMonitor</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>/axis/*</url-pattern> <!-- Para cambiar el path -->
+    </servlet-mapping>
+
+    <!-- web service jax ws 2.2 -->
+
+    <servlet>
+        <servlet-name>wsServlet</servlet-name>
+        <servlet-class>com.miguelangeljulvez.easyredsys.server.ws.literal.InotificacionSISImpl</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>wsServlet</servlet-name>
+        <url-pattern>/literal/InotificacionSIS</url-pattern> <!-- Para cambiar el path -->
+    </servlet-mapping>
+
+</web-app>

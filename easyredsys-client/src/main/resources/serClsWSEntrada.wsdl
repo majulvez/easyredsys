@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice.sis.sermepa.es"
+                  xmlns:intf="http://webservice.sis.sermepa.es"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <schema elementFormDefault="qualified"
+                targetNamespace="http://webservice.sis.sermepa.es" xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:intf="http://webservice.sis.sermepa.es" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <element name="trataPeticion">
+                <complexType>
+                    <sequence>
+                        <element name="datoEntrada" nillable="true" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="trataPeticionResponse">
+                <complexType>
+                    <sequence>
+                        <element name="trataPeticionReturn" nillable="true" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="consultaDCC">
+                <complexType>
+                    <sequence>
+                        <element name="datoEntrada" nillable="true" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="consultaDCCResponse">
+                <complexType>
+                    <sequence>
+                        <element name="consultaDCCReturn" nillable="true" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="consultaDCCRequest">
+        <wsdl:part element="intf:consultaDCC" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="trataPeticionResponse">
+        <wsdl:part element="intf:trataPeticionResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="trataPeticionRequest">
+        <wsdl:part element="intf:trataPeticion" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="consultaDCCResponse">
+        <wsdl:part element="intf:consultaDCCResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:portType name="SerClsWSEntrada">
+        <wsdl:operation name="trataPeticion">
+            <wsdl:input message="intf:trataPeticionRequest" name="trataPeticionRequest"/>
+            <wsdl:output message="intf:trataPeticionResponse" name="trataPeticionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="consultaDCC">
+            <wsdl:input message="intf:consultaDCCRequest" name="consultaDCCRequest"/>
+            <wsdl:output message="intf:consultaDCCResponse" name="consultaDCCResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SerClsWSEntradaSoapBinding" type="intf:SerClsWSEntrada">
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="trataPeticion">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="trataPeticionRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="trataPeticionResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="consultaDCC">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="consultaDCCRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="consultaDCCResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SerClsWSEntradaService">
+        <wsdl:port binding="intf:SerClsWSEntradaSoapBinding" name="SerClsWSEntrada">
+            <wsdlsoap:address location="https://sis.redsys.es/sis/services/SerClsWSEntrada"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

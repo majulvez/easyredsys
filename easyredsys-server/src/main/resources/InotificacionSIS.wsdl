@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="InotificacionSIS" targetNamespace="https://sis.SERMEPA.es/sis/InotificacionSIS.wsdl"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://sis.SERMEPA.es/sis/InotificacionSIS.wsdl"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+    <message name="procesaNotificacionSISRequest">
+        <part name="XML" type="xs:string"/>
+    </message>
+    <message name="procesaNotificacionSISResponse">
+        <part name="return" type="xs:string"/>
+    </message>
+    <portType name="InotificacionSISPortType">
+        <operation name="procesaNotificacionSIS">
+            <input message="tns:procesaNotificacionSISRequest"/>
+            <output message="tns:procesaNotificacionSISResponse"/>
+        </operation>
+    </portType>
+    <binding name="InotificacionSISBinding" type="tns:InotificacionSISPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="procesaNotificacionSIS">
+            <soap:operation soapAction="urn:InotificacionSIS#procesaNotificacionSIS" style="rpc"/>
+            <input>
+                <soap:body use="literal"
+                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="InotificacionSIS"/>
+            </input>
+            <output>
+                <soap:body use="literal"
+                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="InotificacionSIS"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="InotificacionSISService">
+        <port name="InotificacionSIS" binding="tns:InotificacionSISBinding">
+            <soap:address location="http://localhost/WebServiceSIS/InotificacionSIS.asmx"/>
+        </port>
+    </service>
+</definitions>

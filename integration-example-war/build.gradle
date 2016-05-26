@@ -1,0 +1,38 @@
+apply plugin: 'war'
+
+repositories {
+    mavenCentral()
+    maven { url 'http://repository.jboss.org/nexus/content/groups/public' }
+    maven { url 'http://repository.jboss.org/nexus/content/repositories/deprecated' }
+    maven { url 'http://repo.jfrog.org/artifactory/repo' }
+}
+
+dependencies {
+
+    compile project(':easyredsys-client')
+    compile project(':easyredsys-server')
+
+    // JAX-RS 2.0(.1) - Añade esta dependencia si vas a utilizar Apache Tomcat
+    //compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+
+    // Junit
+    testCompile 'junit:junit:4.12'
+
+    // Mockito
+    testCompile 'org.mockito:mockito-core:2.0.44-beta'
+    testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
+
+    testCompile 'com.owlike:genson:1.3'
+
+    //providedCompile "javax:javaee-api:7.0"
+    testCompile "org.jboss.arquillian.junit:arquillian-junit-container:1.1.11.Final"
+    testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:1.1.11.Final"
+    testCompile "org.wildfly.arquillian:wildfly-arquillian-container-managed:2.0.0.Final"
+    testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:2.2.2"
+    testCompile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.2.1.Final'
+    testCompile group: 'xerces', name: 'xercesImpl', version: '2.11.0'
+}
+
+
+
+
