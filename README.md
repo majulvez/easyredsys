@@ -4,8 +4,6 @@ Esta librería facilita la integración con la pasarela de pago Redsys para apli
 
 Permite realizar compras CES, compras No CES, autorizaciones devoluciones, pagos diferidos y pagos recurrentes
 
-**EN ESTOS MOMENTOS ESTÁ EN PROCESO DE PUBLICACIÓN EN LOS REPOSITORIOS MAVEN**
-
 ##Requisitos##
 
 1. Java 1.8.x
