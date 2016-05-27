@@ -1,4 +1,7 @@
 apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
 
 sourceCompatibility = 1.8
 
@@ -27,3 +30,60 @@ dependencies {
     compile group: 'org.reflections', name: 'reflections', version: '0.9.10'
 }
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from tasks.javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+                name 'easyredsys-server'
+                packaging 'jar'
+                description "Librería que facilita la integración con la pasarela de pago Redsys para aplicaciones Java"
+                url "https://www.miguelangeljulvez.com/easyredsys"
+
+                scm {
+                    url "https://github.com/majulvez/easyredsys"
+                    connection "scm:git@github.com:majulvez/easyredsys.git"
+                    developerConnection "scm:git@github.com:majulvez/easyredsys.git"
+                }
+
+                licenses {
+                    license {
+                        name "The Apache Software License, Version 2.0"
+                        url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                        distribution "repo"
+                    }
+                }
+
+                developers {
+                    developer {
+                        id "majulvez"
+                        name "Miguel Ángel Júlvez"
+                    }
+                }
+            }
+        }
+    }
+}
