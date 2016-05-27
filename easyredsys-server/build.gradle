@@ -32,6 +32,7 @@ dependencies {
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
+    tasks.javadoc.failOnError = false
     from tasks.javadoc.destinationDir
 }
 
@@ -42,6 +43,8 @@ task sourcesJar(type: Jar) {
 
 artifacts {
     archives jar
+    archives javadocJar
+    archives sourcesJar
 }
 
 signing {
