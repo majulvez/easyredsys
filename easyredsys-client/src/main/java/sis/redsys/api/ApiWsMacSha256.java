@@ -31,14 +31,6 @@ public class ApiWsMacSha256 {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
-	/** 3DES Function 
-	 * @throws BadPaddingException 
-	 * @throws IllegalBlockSizeException 
-	 * @throws UnsupportedEncodingException 
-	 * @throws InvalidAlgorithmParameterException 
-	 * @throws InvalidKeyException 
-	 * @throws NoSuchPaddingException 
-	 * @throws NoSuchAlgorithmException */
 	public byte [] encrypt_3DES(final String claveHex, final String datos) throws IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException, InvalidKeyException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchPaddingException {
 		byte [] ciphertext = null;
 		// Crea la clave
@@ -66,8 +58,6 @@ public class ApiWsMacSha256 {
 		return ciphertext;
 	}
 
-	/** Base64 y HEX Functions 
-	 * @throws UnsupportedEncodingException */
 	public String encodeB64String(final byte [] data) throws UnsupportedEncodingException {
 		return new String(Base64.encodeBase64(data), "UTF-8");
 	}
@@ -141,11 +131,6 @@ public class ApiWsMacSha256 {
 		return salida.toByteArray();
 	}
 
-	/** MAC Function 
-	 * @throws UnsupportedEncodingException 
-	 * @throws IllegalStateException 
-	 * @throws InvalidKeyException 
-	 * @throws NoSuchAlgorithmException */
 	public byte [] mac256(final String dsMerchantParameters, final byte [] secretKo) throws IllegalStateException, UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException {
 		// Se hace el MAC con la clave de la operaci�n "Ko" y se codifica en BASE64
 		Mac sha256HMAC = Mac.getInstance("HmacSHA256");

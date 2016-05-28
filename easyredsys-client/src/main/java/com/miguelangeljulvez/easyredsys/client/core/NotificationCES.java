@@ -10,10 +10,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-/**
- * Pensar si sacar los métodos isValid a la clase de Messages o dejarlo aqui
- */
 public final class NotificationCES extends Notification {
 
     private String ds_MerchantParameters;

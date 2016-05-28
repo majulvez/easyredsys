@@ -20,39 +20,20 @@ CLASE DE IMPLEMENTACIÓN DE REDSYS
  */
 public class ApiMacSha256 {
 
-	/** Numero de bytes para obtener cadenas multiplos de 8 */
 	private final short OCHO = 8;
 
-	/** Constante de array de inicializaci�n */
 	private final byte [] IV = {0, 0, 0, 0, 0, 0, 0, 0};
 
-	/** Array de DatosEntrada */
 	private JSONObject jsonObj = new JSONObject();
 
-	/** Set parameter */
 	public void setParameter(final String key, final String value) {
 		jsonObj.put(key, value);
 	}
 
-	/** Get parameter */
 	public String getParameter(final String key) {
 		return jsonObj.getString(key);
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////// 					FUNCIONES AUXILIARES: 											  ///////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-
-	/** 3DES Function 
-	 * @throws InvalidKeyException 
-	 * @throws NoSuchPaddingException 
-	 * @throws NoSuchAlgorithmException 
-	 * @throws InvalidAlgorithmParameterException 
-	 * @throws UnsupportedEncodingException 
-	 * @throws BadPaddingException 
-	 * @throws IllegalBlockSizeException */
 	public byte [] encrypt_3DES(final String claveHex, final String datos) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
 		byte [] ciphertext = null;
 		// Crea la clave
@@ -80,8 +61,6 @@ public class ApiMacSha256 {
 		return ciphertext;
 	}
 
-	/** Base64 y HEX Functions 
-	 * @throws UnsupportedEncodingException */
 	public String encodeB64String(final byte [] data) throws UnsupportedEncodingException {
 		return new String(Base64.encodeBase64(data), "UTF-8");
 	}
@@ -155,11 +134,6 @@ public class ApiMacSha256 {
 		return salida.toByteArray();
 	}
 
-	/** MAC Function 
-	 * @throws NoSuchAlgorithmException 
-	 * @throws InvalidKeyException 
-	 * @throws UnsupportedEncodingException 
-	 * @throws IllegalStateException */
 	public byte [] mac256(final String dsMerchantParameters, final byte [] secretKo) throws NoSuchAlgorithmException, InvalidKeyException, IllegalStateException, UnsupportedEncodingException {
 		// Se hace el MAC con la clave de la operaci�n "Ko" y se codifica en BASE64
 		Mac sha256HMAC = Mac.getInstance("HmacSHA256");
@@ -169,11 +143,6 @@ public class ApiMacSha256 {
 		return hash;
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////// 		FUNCIONES PARA LA GENERACI�N DEL FORMULARIO DE PAGO: 				 ////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
 	public String getOrder() {
 		if (getParameter("DS_MERCHANT_ORDER") == null || getParameter("DS_MERCHANT_ORDER").equals("")) {
 			return getParameter("Ds_Merchant_Order");
@@ -200,12 +169,6 @@ public class ApiMacSha256 {
 		String res = encodeB64String(hash);
 		return res;
 	}
-
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////// FUNCIONES PARA LA RECEPCI�N DE DATOS DE PAGO (Notif, URLOK y URLKO): ////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	public String getOrderNotif() {
 		if (getParameter("Ds_Order") == null || getParameter("Ds_Order").equals("")) {
@@ -254,15 +217,6 @@ public class ApiMacSha256 {
 		return new String(res, "UTF-8");
 	}
 
-	/******  Notificaciones SOAP ENTRADA *****
-	 * @throws UnsupportedEncodingException 
-	 * @throws IllegalStateException 
-	 * @throws NoSuchAlgorithmException 
-	 * @throws InvalidKeyException 
-	 * @throws BadPaddingException 
-	 * @throws IllegalBlockSizeException 
-	 * @throws InvalidAlgorithmParameterException 
-	 * @throws NoSuchPaddingException */
 	public String createMerchantSignatureNotifSOAPRequest(final String claveComercio, final String request) throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 		byte [] clave = decodeB64(claveComercio.getBytes("UTF-8"));
 		String secretKc = toHexadecimal(clave, clave.length);
@@ -274,15 +228,6 @@ public class ApiMacSha256 {
 		return new String(res, "UTF-8");
 	}
 
-	/******  Notificaciones SOAP SALIDA *****
-	 * @throws UnsupportedEncodingException 
-	 * @throws IllegalStateException 
-	 * @throws NoSuchAlgorithmException 
-	 * @throws InvalidKeyException 
-	 * @throws BadPaddingException 
-	 * @throws IllegalBlockSizeException 
-	 * @throws InvalidAlgorithmParameterException 
-	 * @throws NoSuchPaddingException */
 	public String createMerchantSignatureNotifSOAPResponse(final String claveComercio, final String response, final String numPedido) throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, IllegalStateException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 		byte [] clave = decodeB64(claveComercio.getBytes("UTF-8"));
 		String secretKc = toHexadecimal(clave, clave.length);

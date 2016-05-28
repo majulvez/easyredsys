@@ -11,11 +11,6 @@ import javax.jws.soap.SOAPBinding;
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL)
 public interface InotificacionSIS {
 
-
-    /**
-     * @param datoEntrada
-     * @return returns java.lang.String
-     */
     @WebMethod(action = "notificacion")
     @WebResult(name = "notificacionReturn", targetNamespace = "http://notificador.webservice.sis.redsys.es")
     String notificacion(@WebParam(name = "datoEntrada", targetNamespace = "http://notificador.webservice.sis.redsys.es") String datoEntrada);

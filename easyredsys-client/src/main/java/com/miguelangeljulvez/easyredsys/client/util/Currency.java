@@ -1,18 +1,7 @@
 package com.miguelangeljulvez.easyredsys.client.util;
 
 
-/**
- * The currencies (ISO 4217). Reference: <a href="http://en.wikipedia.org/wiki/ISO_4217">Wikipedia ISO 4217</a>.
- * <p>
- * TODO (last update: 2012-11-01):
- * </p><ul>
- *   <li>need to add "Kosovo" to EURO list (no ISO Country code yet!)
- * </li></ul>
- * This class/code is Public Domain (2012). Feel free to do anything you please. Consider visiting our website
- * at <a href="http://www.noblemaster.com">Noble Master</a>.
- *
- * @author noblemaster (Christoph Aschwanden)
- */
+// @author noblemaster (Christoph Aschwanden)
 public enum Currency {
 
     AED(784, Digits.DIGITS_2, "United Arab Emirates dirham", new Country[] { Country.AE }),
@@ -308,7 +297,7 @@ public enum Currency {
     /**
      * Returns the currency for the given code.
      *
-     * @param code  The code, e.g. "USD", "EUR", etc.
+     * @param numeric  The code, e.g. "USD", "EUR", etc.
      * @return  The corresponding currency or null if it doesn't exist.
      */
     public static Currency findByNumeric(int numeric) {

@@ -1,4 +1,4 @@
-package com.miguelangeljulvez.com.example.test;
+package com.miguelangeljulvez.easyredsys.example.test;
 
 import com.miguelangeljulvez.easyredsys.example.AppConfigImpl;
 import com.miguelangeljulvez.easyredsys.server.ws.axis.InotificacionSISPortType;
