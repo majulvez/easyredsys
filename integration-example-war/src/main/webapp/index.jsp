@@ -65,6 +65,7 @@
             <label for="cvv">CVV: </label> <input type="text" name="cvv" id="cvv" value="123" /><br />
             <input type="submit" value="Comprar"/>
         </form>
+        <p>(Código esperado de error SIS0252)</p>
     </fieldset>
 </body>
 

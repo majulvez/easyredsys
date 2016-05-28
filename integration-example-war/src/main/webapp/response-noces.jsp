@@ -48,7 +48,7 @@
         EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
         out.write("Congratulations! Everything worked!");
     } catch (OperationException e) {
-        out.write("Ups... something was wrong. Error code: " + e.getCode());
+        out.write("Ups... something was wrong. Error code: " + e.getCode() + "-" + e.getMessage());
         e.printStackTrace();
     }
 %>
