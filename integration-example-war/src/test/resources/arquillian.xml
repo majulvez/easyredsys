@@ -8,7 +8,7 @@
 
     <container qualifier="wildfly-managed" default="true">
         <configuration>
-            <property name="jbossHome">/Users/miguel/Downloads/wildfly-10.0.0.Final</property>
+            <property name="jbossHome">/Users/miguel/Downloads/wildfly-10.1.0.Final</property>
             <property name="allowConnectingToRunningServer">true</property>
         </configuration>
     </container>
