@@ -6,6 +6,7 @@ repositories {
     //maven { url 'http://repository.jboss.org/nexus/content/repositories/deprecated' }
     //maven { url 'http://repo.jfrog.org/artifactory/repo' }
     //maven { url 'https://oss.sonatype.org/content/repositories/snapshots/'}
+    maven { url 'http://repo.gradle.org/gradle/libs-releases-local' }
 }
 
 dependencies {
@@ -13,8 +14,8 @@ dependencies {
     //compile project(':easyredsys-client')
     //compile project(':easyredsys-server')
 
-    compile 'com.miguelangeljulvez.easyredsys:easyredsys-client:1.0.0'
-    compile 'com.miguelangeljulvez.easyredsys:easyredsys-server:1.0.0'
+    compile 'com.miguelangeljulvez.easyredsys:easyredsys-client:1.0.1-SNAPSHOT'
+    compile 'com.miguelangeljulvez.easyredsys:easyredsys-server:1.0.1-SNAPSHOT'
 
     // JAX-RS 2.0(.1) - Añade esta dependencia si vas a utilizar Apache Tomcat
     //compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
