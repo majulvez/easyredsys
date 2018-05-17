@@ -48,9 +48,10 @@ artifacts {
     archives sourcesJar
 }
 
-//signing {
-//    sign configurations.archives
-//}
+signing {
+    required { project.hasProperty('deployment') }
+    sign configurations.archives
+}
 
 uploadArchives {
     repositories {
