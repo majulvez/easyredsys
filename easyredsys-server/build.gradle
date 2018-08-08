@@ -23,7 +23,7 @@ dependencies {
     // JAX-RS 2.1
     compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1'
 
-    // Servlet 3
+    // Servlet 4
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
 
     compile group: 'org.glassfish.gmbal', name: 'gmbal', version: '4.0.0-b001'
@@ -49,7 +49,7 @@ artifacts {
 }
 
 signing {
-    required { project.hasProperty('deployment') }
+    required { gradle.taskGraph.hasTask("uploadArchives") }
     sign configurations.archives
 }
 
