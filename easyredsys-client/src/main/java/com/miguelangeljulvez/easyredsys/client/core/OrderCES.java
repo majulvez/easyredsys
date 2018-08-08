@@ -20,8 +20,8 @@ public final class OrderCES extends Order {
         apiMacSha256.setParameter("DS_MERCHANT_MERCHANTURL", "");
         apiMacSha256.setParameter("DS_MERCHANT_URLOK", "");
         apiMacSha256.setParameter("DS_MERCHANT_URLKO", "");
-        apiMacSha256.setParameter("DS_MERCHANT_NAME", "");
-        apiMacSha256.setParameter("DS_CONSUMER_LANGUAGE", "");
+        apiMacSha256.setParameter("DS_MERCHANT_MERCHANTNAME", "");
+        apiMacSha256.setParameter("DS_MERCHANT_CONSUMERLANGUAGE", "");
         apiMacSha256.setParameter("DS_MERCHANT_PAYMETHODS", "");
     }
 
@@ -50,16 +50,16 @@ public final class OrderCES extends Order {
     }
 
     public String getDs_merchant_merchantName() {
-        return apiMacSha256.getParameter("DS_MERCHANT_NAME");
+        return apiMacSha256.getParameter("DS_MERCHANT_MERCHANTNAME");
     }
 
     public void setDs_merchant_merchantName(String ds_merchant_merchantName) {
-        apiMacSha256.setParameter("DS_MERCHANT_NAME", ds_merchant_merchantName);
+        apiMacSha256.setParameter("DS_MERCHANT_MERCHANTNAME", ds_merchant_merchantName);
     }
 
     public int getDs_merchant_consumerLanguage() {
         try {
-            return Integer.valueOf(apiMacSha256.getParameter("DS_CONSUMER_LANGUAGE"));
+            return Integer.valueOf(apiMacSha256.getParameter("DS_MERCHANT_CONSUMERLANGUAGE"));
         } catch (NumberFormatException nef) {
         }
 
@@ -67,7 +67,7 @@ public final class OrderCES extends Order {
     }
 
     public void setDs_merchant_consumerLanguage(int ds_merchant_consumerLanguage) {
-        apiMacSha256.setParameter("DS_CONSUMER_LANGUAGE", String.valueOf(ds_merchant_consumerLanguage));
+        apiMacSha256.setParameter("DS_MERCHANT_CONSUMERLANGUAGE", String.valueOf(ds_merchant_consumerLanguage));
     }
 
     public String getDs_merchant_paymethods() {
@@ -94,10 +94,10 @@ public final class OrderCES extends Order {
         sb.append("DS_MERCHANT_URLKO:");
         sb.append(getDs_merchant_UrlKO());
         sb.append(System.lineSeparator());
-        sb.append("DS_MERCHANT_NAME:");
+        sb.append("DS_MERCHANT_MERCHANTNAME:");
         sb.append(getDs_merchant_merchantName());
         sb.append(System.lineSeparator());
-        sb.append("DS_CONSUMER_LANGUAGE:");
+        sb.append("DS_MERCHANT_CONSUMER_LANGUAGE:");
         sb.append(getDs_merchant_consumerLanguage());
         sb.append(System.lineSeparator());
 
