@@ -46,7 +46,7 @@ artifacts {
 }
 
 signing {
-    required { project.hasProperty('deployment') }
+    required { gradle.taskGraph.hasTask("uploadArchives") }
     sign configurations.archives
 }
 
