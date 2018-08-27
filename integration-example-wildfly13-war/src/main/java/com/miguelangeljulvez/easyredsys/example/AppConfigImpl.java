@@ -3,23 +3,25 @@ package com.miguelangeljulvez.easyredsys.example;
 import com.miguelangeljulvez.easyredsys.client.AppConfig;
 import com.miguelangeljulvez.easyredsys.client.core.Notification;
 
+import javax.inject.Named;
 import java.util.logging.Logger;
 
+@Named
 public class AppConfigImpl implements AppConfig {
 
-    static String getMerchantCode() {
+    public String getMerchantCode() {
         return "061978060";
     }
 
-    static String getTerminal() {
+    public String getTerminal() {
         return "001";
     }
 
-    static String getSecretKey() {
+    public String getSecretKey() {
         return "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
     }
 
-    static boolean isTestMode() { return true;}
+    public boolean isTestMode() { return true;}
 
     @Override
     public void saveNotification(Notification notification) {
