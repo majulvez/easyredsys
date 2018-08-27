@@ -1,6 +1,7 @@
 package com.miguelangeljulvez.easyredsys.server.ws.literal;
 
 import com.miguelangeljulvez.easyredsys.client.AppConfig;
+import com.miguelangeljulvez.easyredsys.client.util.ResponseCodes;
 import com.miguelangeljulvez.easyredsys.server.core.MessageOrderSOAPRequest;
 import com.miguelangeljulvez.easyredsys.server.core.MessageOrderSOAPResponse;
 import com.miguelangeljulvez.easyredsys.server.core.OrderSOAP;
@@ -54,6 +55,12 @@ public class InotificacionSISImpl implements InotificacionSIS {
         }
 
         _log.info("Notificación válida recibida para la order " + messageOrderSOAPRequest.getNotificationSOAP().getDs_Order());
+
+        if (!ResponseCodes.isSuccessResponse(messageOrderSOAPRequest.getNotificationSOAP().getDs_Response())) {
+            _log.log(Level.WARNING, "OperationException: Response code de error");
+
+            throw new SecurityException(ResponseCodes.getErrorResponseMessage(messageOrderSOAPRequest.getNotificationSOAP().getDs_Response()));
+        }
 
         if (appConfig == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");

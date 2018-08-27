@@ -10,6 +10,4 @@ public interface AppConfig {
     static boolean isTestMode() { return true;}
 
     void saveNotification(Notification notification);
-
-    default String getCushysellToken() { return "";}
 }

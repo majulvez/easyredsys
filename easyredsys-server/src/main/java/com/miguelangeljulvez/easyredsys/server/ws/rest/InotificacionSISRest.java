@@ -3,6 +3,7 @@ package com.miguelangeljulvez.easyredsys.server.ws.rest;
 
 import com.miguelangeljulvez.easyredsys.client.AppConfig;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderCESResponse;
+import com.miguelangeljulvez.easyredsys.client.util.ResponseCodes;
 import com.miguelangeljulvez.easyredsys.server.util.SecurityUtil;
 
 import javax.inject.Inject;
@@ -60,6 +61,12 @@ public class InotificacionSISRest {
         }
 
         _log.info("Notificación válida recibida para la order: " + messageOrderCESResponse.getOperationCES().getDs_Order());
+
+        if (!ResponseCodes.isSuccessResponse(messageOrderCESResponse.getOperationCES().getDs_Response())) {
+            _log.log(Level.WARNING, "OperationException: Response code de error");
+
+            throw new SecurityException(ResponseCodes.getErrorResponseMessage(messageOrderCESResponse.getOperationCES().getDs_Response()));
+        }
 
         if (appConfig == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
