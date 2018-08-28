@@ -64,15 +64,21 @@
 
     <!-- web service jax ws 2.2 -->
 
+    <listener>
+        <listener-class>
+            com.sun.xml.ws.transport.http.servlet.WSServletContextListener
+        </listener-class>
+    </listener>
     <servlet>
-        <servlet-name>wsServlet</servlet-name>
-        <servlet-class>com.miguelangeljulvez.easyredsys.server.ws.literal.InotificacionSISImpl</servlet-class>
+        <servlet-name>Foo</servlet-name>
+        <servlet-class>
+            com.sun.xml.ws.transport.http.servlet.WSServlet
+        </servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
-        <servlet-name>wsServlet</servlet-name>
-        <url-pattern>/literal/InotificacionSIS</url-pattern> <!-- Para cambiar el path -->
+        <servlet-name>Foo</servlet-name>
+        <url-pattern>/literal/InotificacionSIS</url-pattern>
     </servlet-mapping>
 
 </web-app>

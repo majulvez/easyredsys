@@ -9,19 +9,19 @@ import java.util.logging.Logger;
 @Named
 public class AppConfigImpl implements AppConfig {
 
-    public String getMerchantCode() {
+    public static String getMerchantCode() {
         return "061978060";
     }
 
-    public String getTerminal() {
+    public static String getTerminal() {
         return "001";
     }
 
-    public String getSecretKey() {
+    public static String getSecretKey() {
         return "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
     }
 
-    public boolean isTestMode() { return true;}
+    public static boolean isTestMode() { return true;}
 
     @Override
     public void saveNotification(Notification notification) {
