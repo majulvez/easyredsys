@@ -24,23 +24,6 @@ public class OrderCESTest {
     @Test
     public void validLocalOrderCES() {
 
-        OrderCES orderCES = new OrderCES.Builder(AppConfigImpl.class)
-                .transactionType(TransactionType.AUTORIZACION)
-                .currency(Currency.EUR)
-                .consumerLanguage(Language.SPANISH)
-                .order(String.valueOf(getRandomOrder()))
-                .amount(1000)
-                .productDescription("Product description")
-                .payMethods(PaymentMethod.TARJETA)
-                .urlOk("http://localhost:8080/redsys/index.jsp?isSuccessful=TRUE")
-                .urlKo("http://localhost:8080/redsys/index.jsp?isSuccessful=FALSE")
-                .urlNotification("http://localhost:8080/redsys")
-                .build();
-
-        MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderCES)
-                .build();
-
         String signatureVersion = "HMAC_SHA256_V1";
         String merchantParameter = "eyJEc19EYXRlIjoiMTYlMkYwNSUyRjIwMTYiLCJEc19Ib3VyIjoiMTElM0E0NSIsIkRzX1NlY3VyZVBheW1lbnQiOiIxIiwiRHNfQ2FyZF9Db3VudHJ5IjoiNzI0IiwiRHNfQW1vdW50IjoiMTAwMCIsIkRzX0N1cnJlbmN5IjoiOTc4IiwiRHNfT3JkZXIiOiJrbG9rbnp4bXpidnUiLCJEc19NZXJjaGFudENvZGUiOiI2MTk3ODA2MCIsIkRzX1Rlcm1pbmFsIjoiMDAxIiwiRHNfUmVzcG9uc2UiOiIwMDAwIiwiRHNfTWVyY2hhbnREYXRhIjoiIiwiRHNfVHJhbnNhY3Rpb25UeXBlIjoiMCIsIkRzX0NvbnN1bWVyTGFuZ3VhZ2UiOiIxIiwiRHNfQXV0aG9yaXNhdGlvbkNvZGUiOiIzNTcwMTQifQ==";
         String signature = "CfRWIlpdnuAYkWEaxk8OmUw3_8g0GUxFg-LpX2Zs57g=";
@@ -61,9 +44,9 @@ public class OrderCESTest {
                 .amount(1000)
                 .productDescription("Product description")
                 .payMethods(PaymentMethod.TARJETA)
-                .urlOk("http://localhost:8080/redsys/index.jsp?isSuccessful=TRUE")
-                .urlKo("http://localhost:8080/redsys/index.jsp?isSuccessful=FALSE")
-                .urlNotification("http://localhost:8080/redsys")
+                .urlOk("http://localhost:8080/easyredsys/index.jsp?isSuccessful=TRUE")
+                .urlKo("http://localhost:8080/easyredsys/index.jsp?isSuccessful=FALSE")
+                .urlNotification("http://localhost:8080/easyredsys")
                 .build();
 
         MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(AppConfigImpl.class)
@@ -99,9 +82,9 @@ public class OrderCESTest {
                 .amount(1000)
                 .productDescription("Product description")
                 .payMethods(PaymentMethod.TARJETA)
-                .urlOk("http://localhost:8080/redsys/index.jsp?isSuccessful=TRUE")
-                .urlKo("http://localhost:8080/redsys/index.jsp?isSuccessful=FALSE")
-                .urlNotification("http://localhost:8080/redsys")
+                .urlOk("http://localhost:8080/easyredsys/index.jsp?isSuccessful=TRUE")
+                .urlKo("http://localhost:8080/easyredsys/index.jsp?isSuccessful=FALSE")
+                .urlNotification("http://localhost:8080/easyredsys")
                 .build();
 
         MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(AppConfigImpl.class)

@@ -3,8 +3,10 @@ package com.miguelangeljulvez.easyredsys.example;
 import com.miguelangeljulvez.easyredsys.client.AppConfig;
 import com.miguelangeljulvez.easyredsys.client.core.Notification;
 
+import javax.inject.Named;
 import java.util.logging.Logger;
 
+@Named
 public class AppConfigImpl implements AppConfig {
 
     static String getMerchantCode() {
