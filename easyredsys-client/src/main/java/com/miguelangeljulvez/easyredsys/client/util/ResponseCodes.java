@@ -23,7 +23,8 @@ public class ResponseCodes {
 
 
         errorResponseCodes.put("101", "101");
-        errorResponseCodes.put("102", "106");
+        errorResponseCodes.put("102", "102");
+        errorResponseCodes.put("106", "106");
         errorResponseCodes.put("125", "125");
         errorResponseCodes.put("129", "129");
         errorResponseCodes.put("180", "180");
@@ -37,6 +38,22 @@ public class ResponseCodes {
         errorResponseCodes.put("944", "944");
         errorResponseCodes.put("950", "950");
         errorResponseCodes.put("912", "912");
+        errorResponseCodes.put("0101", "101");
+        errorResponseCodes.put("0102", "102");
+        errorResponseCodes.put("0106", "106");
+        errorResponseCodes.put("0125", "125");
+        errorResponseCodes.put("0129", "129");
+        errorResponseCodes.put("0180", "180");
+        errorResponseCodes.put("0184", "184");
+        errorResponseCodes.put("0190", "190");
+        errorResponseCodes.put("0191", "191");
+        errorResponseCodes.put("0202", "202");
+        errorResponseCodes.put("0904", "904");
+        errorResponseCodes.put("0909", "909");
+        errorResponseCodes.put("0913", "913");
+        errorResponseCodes.put("0944", "944");
+        errorResponseCodes.put("0950", "950");
+        errorResponseCodes.put("0912", "912");
         errorResponseCodes.put("9912", "9912");
         errorResponseCodes.put("9064", "9064");
         errorResponseCodes.put("9078", "9078");

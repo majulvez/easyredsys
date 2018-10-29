@@ -8,6 +8,8 @@ import sis.redsys.api.ApiMacSha256;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +20,8 @@ import java.util.logging.Logger;
 public abstract class Notification {
 
     protected final ApiMacSha256 apiMacSha256 = new ApiMacSha256();
+
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     @XmlElement(name = "Ds_Date")
     public String getDs_Date() {
@@ -214,6 +218,7 @@ public abstract class Notification {
         apiMacSha256.setParameter("Ds_Signature", ds_Signature);
     }
 
+    /*
     @XmlElement(name="Ds_Language")
     public String getDs_Language() {
         String ds_Language = "";
@@ -226,6 +231,7 @@ public abstract class Notification {
     public void setDs_Language(String ds_Language) {
         apiMacSha256.setParameter("Ds_Language", ds_Language);
     }
+    */
 
     @XmlElement(name="Ds_Card_Country")
     public String getDs_Card_Country() {
@@ -255,16 +261,17 @@ public abstract class Notification {
 
     @XmlElement(name = "epochTime")
     public long getEpochTime() {
-        String dateString = getDs_Date() + " " + getDs_Hour(); //Hora de la peticion en madrid
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         long epochTime = 0;
         try {
+            String dateString = URLDecoder.decode(getDs_Date() + " " + getDs_Hour(), "UTF-8"); //Hora de la peticion en madrid
+
             Date date = simpleDateFormat.parse(dateString);
 
             epochTime = date.getTime();
         } catch (ParseException e) {
+            _log.log(Level.WARNING, e.getMessage(), e);
+        } catch (UnsupportedEncodingException e) {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
 
@@ -326,8 +333,8 @@ public abstract class Notification {
         sb.append(getDs_Signature());
         sb.append(System.lineSeparator());
         sb.append("Ds_Language:");
-        sb.append(getDs_Language());
-        sb.append(System.lineSeparator());
+        //sb.append(getDs_Language());
+        //sb.append(System.lineSeparator());
         sb.append("Ds_Card_Country:");
         sb.append(getDs_Card_Country());
         if (getDs_Card_Country() != null && !getDs_Card_Country().isEmpty())
