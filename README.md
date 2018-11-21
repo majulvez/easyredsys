@@ -19,6 +19,10 @@ En el submódulo "integration-example-war" hay un ejemplo de integración de est
 
 Puedes ver el ejemplo de integración funcionando en esta dirección: http://easyredsys.miguelangeljulvez.com
 
+#### Servidores de aplicaciones testeados ####
+
+Apache Tomcat 8 y 9, Wildfly 12, 13 y 14, Payara 5
+
 ###Integrar el jar en tu proyecto y modifica tu aplicación###
 
 Añade como dependencia maven lo siguiente
@@ -27,7 +31,7 @@ Añade como dependencia maven lo siguiente
 <dependency>
   <group>com.miguelangeljulvez.easyredsys</group>
   <name>easyredsys-client</name>
-  <version>1.1.2</version>
+  <version>1.1.4</version>
 </dependency>
 ```
 
@@ -140,7 +144,7 @@ Si se produjera alguna excepción, la descripción del error aparecerá en los l
 <dependency>
   <group>com.miguelangeljulvez.easyredsys</group>
   <name>easyredsys-server</name>
-  <version>1.1.2</version>
+  <version>1.1.4</version>
 </dependency>
 ```
 

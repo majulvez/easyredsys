@@ -12,4 +12,5 @@
             <property name="allowConnectingToRunningServer">true</property>
         </configuration>
     </container>
+
 </arquillian>

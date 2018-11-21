@@ -6,10 +6,13 @@
 
     <defaultProtocol type="Servlet 3.0" />
 
-    <container qualifier="wildfly-managed" default="true">
+    <container qualifier="tomcat">
         <configuration>
-            <property name="jbossHome">/Users/miguel/Documents/proyectos/easyredsys/wildfly-12.0.0.Final</property>
-            <property name="allowConnectingToRunningServer">true</property>
+            <property name="tomcatHome">target/tomcat-embedded-8</property>
+            <property name="workDir">work</property>
+            <property name="bindHttpPort">8085</property>
+            <property name="unpackArchive">true</property>
+            <property name="serverName">arquillian-tomcat-embedded-8</property>
         </configuration>
     </container>
 </arquillian>
