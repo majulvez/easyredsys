@@ -34,7 +34,7 @@ dependencies {
     testCompile group: 'org.jboss.arquillian.protocol', name: 'arquillian-protocol-servlet', version: '1.4.0.Final'
     testCompile group: 'org.wildfly.arquillian', name: 'wildfly-arquillian-container-managed', version: '2.1.0.Final'
     testCompile group: 'org.jboss.shrinkwrap.resolver', name: 'shrinkwrap-resolver-gradle-depchain', version: '3.1.3', ext: 'pom'
-
+    
     testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:2.2.2"
     testCompile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.3.2.Final'
     testCompile group: 'xerces', name: 'xercesImpl', version: '2.11.0'

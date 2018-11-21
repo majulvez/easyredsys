@@ -1,0 +1,3 @@
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+    <endpoint name="InotificacionSIS" implementation="com.miguelangeljulvez.easyredsys.server.ws.literal.InotificacionSISImpl" url-pattern="/literal/InotificacionSIS"/>
+</endpoints>
