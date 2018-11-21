@@ -5,6 +5,7 @@ import com.miguelangeljulvez.easyredsys.client.AppConfig;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderCESResponse;
 import com.miguelangeljulvez.easyredsys.client.util.ResponseCodes;
 import com.miguelangeljulvez.easyredsys.server.util.SecurityUtil;
+import org.reflections.Reflections;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +14,40 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Path("/InotificacionSIS")
 public class InotificacionSISRest {
 
-    @Inject
+    //@Inject
     private AppConfig appConfig;
+
+    public InotificacionSISRest() {
+
+        Package[] packages = Package.getPackages();
+        Reflections reflections;
+        Set<Class<? extends AppConfig>> classes = new HashSet<>();
+        for (Package packageP: packages) { //¿No hay algo más efectivo para hacer esto?
+            reflections = new Reflections(packageP.getName());
+            classes.addAll(reflections.getSubTypesOf(AppConfig.class));
+        }
+
+        if (classes.size() == 0) {
+            _log.log(Level.SEVERE, "Ninguna clase en el classpath implementa AppConfig");
+        } else if (classes.size() > 1) {
+            _log.log(Level.SEVERE, "Mas de una clase en el classpath implementa AppConfig");
+        } else {
+            Class<? extends AppConfig> aClass = classes.iterator().next();
+            try {
+                appConfig = aClass.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                _log.log(Level.SEVERE, "No se ha podido instanciar la clase que implementa AppConfig");
+            }
+        }
+    }
 
     @POST
     public Response notificar(

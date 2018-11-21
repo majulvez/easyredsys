@@ -41,8 +41,7 @@ public class ArquillianTest {
                 .importBuildOutput()
                 .as(WebArchive.class)
                 .addPackage("com.miguelangeljulvez.easyredsys")
-                .addClass(AppConfigImpl.class)
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+                .addClass(AppConfigImpl.class);
     }
 
     @Test
