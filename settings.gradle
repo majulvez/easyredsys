@@ -1,3 +1,3 @@
 rootProject.name = 'easyredsys'
 
-include 'easyredsys-client', 'easyredsys-server', 'integration-example-payara5-war', 'integration-example-wildfly12-war'
+include 'easyredsys-client', 'easyredsys-server', 'integration-example-payara5-war', 'integration-example-wildfly12-war', 'integration-example-tomcat8-war'
