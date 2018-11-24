@@ -14,6 +14,8 @@ dependencies {
     compile project(':easyredsys-client')
     compile project(':easyredsys-server')
 
+    compile group: 'com.sun.xml.ws', name: 'jaxws-rt', version: '2.3.0', ext: 'pom'
+
     //compile 'com.miguelangeljulvez.easyredsys:easyredsys-client:1.1.0'
     //compile 'com.miguelangeljulvez.easyredsys:easyredsys-server:1.1.0'
 
@@ -39,7 +41,3 @@ dependencies {
     testCompile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.3.2.Final'
     testCompile group: 'xerces', name: 'xercesImpl', version: '2.11.0'
 }
-
-
-
-
