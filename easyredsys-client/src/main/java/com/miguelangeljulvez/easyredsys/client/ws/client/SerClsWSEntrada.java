@@ -19,8 +19,8 @@ public interface SerClsWSEntrada {
 
     @WebMethod
     @WebResult(name = "trataPeticionReturn", targetNamespace = "http://webservice.sis.sermepa.es")
-    @RequestWrapper(localName = "trataPeticion", targetNamespace = "http://webservice.sis.sermepa.es", className = "com.miguelangeljulvez.easyredsys.ws.TrataPeticion")
-    @ResponseWrapper(localName = "trataPeticionResponse", targetNamespace = "http://webservice.sis.sermepa.es", className = "com.miguelangeljulvez.easyredsys.ws.TrataPeticionResponse")
+    @RequestWrapper(localName = "trataPeticion", targetNamespace = "http://webservice.sis.sermepa.es", className = "com.miguelangeljulvez.easyredsys.client.ws.client.TrataPeticion")
+    @ResponseWrapper(localName = "trataPeticionResponse", targetNamespace = "http://webservice.sis.sermepa.es", className = "com.miguelangeljulvez.easyredsys.client.ws.client.TrataPeticionResponse")
     public String trataPeticion(
             @WebParam(name = "datoEntrada", targetNamespace = "http://webservice.sis.sermepa.es")
             String datoEntrada);
@@ -28,8 +28,8 @@ public interface SerClsWSEntrada {
 
     @WebMethod
     @WebResult(name = "consultaDCCReturn", targetNamespace = "http://webservice.sis.sermepa.es")
-    @RequestWrapper(localName = "consultaDCC", targetNamespace = "http://webservice.sis.sermepa.es", className = "com.miguelangeljulvez.easyredsys.ws.ConsultaDCC")
-    @ResponseWrapper(localName = "consultaDCCResponse", targetNamespace = "http://webservice.sis.sermepa.es", className = "com.miguelangeljulvez.easyredsys.ws.ConsultaDCCResponse")
+    @RequestWrapper(localName = "consultaDCC", targetNamespace = "http://webservice.sis.sermepa.es", className = "com.miguelangeljulvez.easyredsys.client.ws.client.ConsultaDCC")
+    @ResponseWrapper(localName = "consultaDCCResponse", targetNamespace = "http://webservice.sis.sermepa.es", className = "com.miguelangeljulvez.easyredsys.client.ws.client.ConsultaDCCResponse")
     public String consultaDCC(
             @WebParam(name = "datoEntrada", targetNamespace = "http://webservice.sis.sermepa.es")
             String datoEntrada);

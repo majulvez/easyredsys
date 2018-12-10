@@ -146,6 +146,6 @@ public class ErrorCodes  {
             message = "not-error-code-found";
         }
 
-        return ResourceBundle.getBundle("Language", locale).getString(message);
+        return ResourceBundle.getBundle("Language", locale, new UTF8Control()).getString(message);
     }
 }
