@@ -123,18 +123,13 @@ public final class OrderCES extends Order {
 
         public Builder(Class<? extends AppConfig> userActionClass) {
             try {
-                Method getMerchantCode = userActionClass.getDeclaredMethod("getMerchantCode");
-                getMerchantCode.setAccessible(true);
-                Method getTerminal = userActionClass.getDeclaredMethod("getTerminal");
-                getTerminal.setAccessible(true);
+                AppConfig appConfig = userActionClass.newInstance();
 
-                this.merchantCode = Long.valueOf((String) getMerchantCode.invoke(null));
-                this.terminal = Long.valueOf((String) getTerminal.invoke(null));
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                this.merchantCode = Long.valueOf(appConfig.getMerchantCode());
+                this.terminal = Long.valueOf(appConfig.getTerminal());
             } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
                 e.printStackTrace();
             }
         }
