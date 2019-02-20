@@ -20,7 +20,7 @@
             .payMethods(PaymentMethod.TARJETA)
             .urlOk("https://easyredsys.miguelangeljulvez.com/easyredsys/response-ces-ok.jsp")
             .urlKo("https://easyredsys.miguelangeljulvez.com/easyredsys/response-ces-error.jsp")
-            .urlNotification("http://easyredsys.miguelangeljulvez.com/easyredsys/rest/InotificacionSIS") //Preferiblemente usando https. Redsys no es compatible con los certifiados de StarSSL, que es el que uso, por lo que fallaría al enviarse la notificación
+            .urlNotification("https://easyredsys.miguelangeljulvez.com/easyredsys/rest/InotificacionSIS")
             .build();
 
     MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(AppConfigImpl.class)
