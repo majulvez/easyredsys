@@ -17,11 +17,11 @@ Permite realizar compras CES, compras No CES, autorizaciones devoluciones, pagos
 
 En el submódulo "integration-example-war" hay un ejemplo de integración de esta librería.
 
-Puedes ver el ejemplo de integración funcionando en esta dirección: http://easyredsys.miguelangeljulvez.com
+Puedes ver el ejemplo de integración funcionando en esta dirección: https://easyredsys.miguelangeljulvez.com
 
 #### Servidores de aplicaciones testeados ####
 
-Apache Tomcat 8 y 9, Wildfly 12, 13 y 14, Payara 5
+Apache Tomcat 8 y 9, Wildfly 12, 13, 14 y 15, Payara 5
 
 ###Integrar el jar en tu proyecto y modifica tu aplicación###
 
@@ -31,7 +31,7 @@ Añade como dependencia maven lo siguiente
 <dependency>
   <group>com.miguelangeljulvez.easyredsys</group>
   <name>easyredsys-client</name>
-  <version>1.1.4</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
@@ -144,7 +144,7 @@ Si se produjera alguna excepción, la descripción del error aparecerá en los l
 <dependency>
   <group>com.miguelangeljulvez.easyredsys</group>
   <name>easyredsys-server</name>
-  <version>1.1.4</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
@@ -152,7 +152,7 @@ Las notificaciones se reciben en el método saveNotificacion() de la interfaz Ap
 
 Las notificaciones que llegan a ese método han pasado todas las verificaciones y controles de seguridad.
 
-Para publicar los diferentes servicios, deberás copiar el contenido de los ficheros web.xml, beans.xml y server-config.wsdd del submódulo "integration-example-war" al directorio WEB-INF de tu aplicación.
+Para publicar los diferentes servicios, deberás copiar el contenido de los ficheros web.xml, sun-jaxws.xml y server-config.wsdd del submódulo "integration-example-war" al directorio WEB-INF de tu aplicación.
 
 ### Notificación ON-LINE: síncrona y asíncrona ###
 ```
