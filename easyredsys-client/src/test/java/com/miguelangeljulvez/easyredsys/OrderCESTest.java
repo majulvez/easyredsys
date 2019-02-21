@@ -9,8 +9,6 @@ import com.miguelangeljulvez.easyredsys.client.util.PaymentMethod;
 import com.miguelangeljulvez.easyredsys.client.util.TransactionType;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.*;
@@ -18,8 +16,10 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class OrderCESTest {
+
 
     @Test
     public void validLocalOrderCES() {
@@ -28,7 +28,7 @@ public class OrderCESTest {
         String merchantParameter = "eyJEc19EYXRlIjoiMTYlMkYwNSUyRjIwMTYiLCJEc19Ib3VyIjoiMTElM0E0NSIsIkRzX1NlY3VyZVBheW1lbnQiOiIxIiwiRHNfQ2FyZF9Db3VudHJ5IjoiNzI0IiwiRHNfQW1vdW50IjoiMTAwMCIsIkRzX0N1cnJlbmN5IjoiOTc4IiwiRHNfT3JkZXIiOiJrbG9rbnp4bXpidnUiLCJEc19NZXJjaGFudENvZGUiOiI2MTk3ODA2MCIsIkRzX1Rlcm1pbmFsIjoiMDAxIiwiRHNfUmVzcG9uc2UiOiIwMDAwIiwiRHNfTWVyY2hhbnREYXRhIjoiIiwiRHNfVHJhbnNhY3Rpb25UeXBlIjoiMCIsIkRzX0NvbnN1bWVyTGFuZ3VhZ2UiOiIxIiwiRHNfQXV0aG9yaXNhdGlvbkNvZGUiOiIzNTcwMTQifQ==";
         String signature = "CfRWIlpdnuAYkWEaxk8OmUw3_8g0GUxFg-LpX2Zs57g=";
 
-        MessageOrderCESResponse messageOrderCESResponse = new MessageOrderCESResponse(signatureVersion, signature, merchantParameter, AppConfigImpl.getSecretKey());
+        MessageOrderCESResponse messageOrderCESResponse = new MessageOrderCESResponse(signatureVersion, signature, merchantParameter, "sq7HjrUOBfKmC576ILgskD5srU870gJ7");
 
         Assert.assertTrue(messageOrderCESResponse.isValid());
     }
@@ -121,4 +121,7 @@ public class OrderCESTest {
 
         return sb.toString();
     }
+
+    private static final Logger _log = Logger.getLogger(OrderCESTest.class.getName());
+
 }

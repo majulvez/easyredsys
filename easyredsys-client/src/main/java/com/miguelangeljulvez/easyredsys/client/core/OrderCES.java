@@ -7,9 +7,6 @@ import com.miguelangeljulvez.easyredsys.client.util.Language;
 import com.miguelangeljulvez.easyredsys.client.util.PaymentMethod;
 import com.miguelangeljulvez.easyredsys.client.util.TransactionType;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 /*
 ** Orden de compra usando compra CES sin usar servicios web
  */
@@ -123,18 +120,13 @@ public final class OrderCES extends Order {
 
         public Builder(Class<? extends AppConfig> userActionClass) {
             try {
-                Method getMerchantCode = userActionClass.getDeclaredMethod("getMerchantCode");
-                getMerchantCode.setAccessible(true);
-                Method getTerminal = userActionClass.getDeclaredMethod("getTerminal");
-                getTerminal.setAccessible(true);
+                AppConfig appConfig = userActionClass.newInstance();
 
-                this.merchantCode = Long.valueOf((String) getMerchantCode.invoke(null));
-                this.terminal = Long.valueOf((String) getTerminal.invoke(null));
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                this.merchantCode = Long.valueOf(appConfig.getMerchantCode());
+                this.terminal = Long.valueOf(appConfig.getTerminal());
             } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
                 e.printStackTrace();
             }
         }

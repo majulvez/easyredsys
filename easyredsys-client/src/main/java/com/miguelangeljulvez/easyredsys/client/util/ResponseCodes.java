@@ -40,6 +40,7 @@ public class ResponseCodes {
         errorResponseCodes.put("912", "912");
         errorResponseCodes.put("0101", "101");
         errorResponseCodes.put("0102", "102");
+        errorResponseCodes.put("0104", "104");
         errorResponseCodes.put("0106", "106");
         errorResponseCodes.put("0125", "125");
         errorResponseCodes.put("0129", "129");

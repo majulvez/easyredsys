@@ -11,7 +11,6 @@ import org.apache.axis.MessageContext;
 import org.apache.axis.transport.http.HTTPConstants;
 import org.reflections.Reflections;
 
-import javax.inject.Inject;
 import javax.jws.WebService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
@@ -19,35 +18,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebService(serviceName = "InotificacionSIS" ,  endpointInterface = "com.miguelangeljulvez.easyredsys.server.ws.literal.InotificacionSIS")
+@WebService(serviceName = "InotificacionSIS", endpointInterface = "com.miguelangeljulvez.easyredsys.server.ws.literal.InotificacionSIS")
 public class InotificacionSISImpl implements InotificacionSIS {
 
-    //@Inject
     private AppConfig appConfig;
-
-    public InotificacionSISImpl() {
-
-        Package[] packages = Package.getPackages();
-        Reflections reflections;
-        Set<Class<? extends AppConfig>> classes = new HashSet<>();
-        for (Package packageP: packages) { //¿No hay algo más efectivo para hacer esto?
-            reflections = new Reflections(packageP.getName());
-            classes.addAll(reflections.getSubTypesOf(AppConfig.class));
-        }
-
-        if (classes.size() == 0) {
-            _log.log(Level.SEVERE, "Ninguna clase en el classpath implementa AppConfig");
-        } else if (classes.size() > 1) {
-            _log.log(Level.SEVERE, "Mas de una clase en el classpath implementa AppConfig");
-        } else {
-            Class<? extends AppConfig> aClass = classes.iterator().next();
-            try {
-                appConfig = aClass.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
-                _log.log(Level.SEVERE, "No se ha podido instanciar la clase que implementa AppConfig");
-            }
-        }
-    }
 
     @Override
     public String notificacion(String datoEntrada) {
@@ -63,12 +37,16 @@ public class InotificacionSISImpl implements InotificacionSIS {
         }
 
         String clave;
-        if (appConfig == null) {
+        if (getAppConfig() == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
             _log.log(Level.WARNING, "Usando password por defecto de la pasarela de test: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'");
             clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
         } else {
-            clave = AppConfig.getSecretKey();
+            if (!getAppConfig().isTestMode()) {
+                clave = getAppConfig().getSecretKey();
+            } else {
+                clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
+            }
         }
 
         MessageOrderSOAPRequest messageOrderSOAPRequest = new MessageOrderSOAPRequest(datoEntrada, clave);
@@ -89,11 +67,11 @@ public class InotificacionSISImpl implements InotificacionSIS {
             throw new SecurityException(ResponseCodes.getErrorResponseMessage(messageOrderSOAPRequest.getNotificationSOAP().getDs_Response()));
         }
 
-        if (appConfig == null) {
+        if (getAppConfig() == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
             _log.log(Level.WARNING, "No hay nada que hacer con la notificación recibida");
         } else {
-            appConfig.saveNotification(messageOrderSOAPRequest.getNotificationSOAP());
+            getAppConfig().saveNotification(messageOrderSOAPRequest.getNotificationSOAP());
         }
 
         OrderSOAP orderSOAP = new OrderSOAP(messageOrderSOAPRequest.getNotificationSOAP().getDs_Order());
@@ -114,7 +92,7 @@ public class InotificacionSISImpl implements InotificacionSIS {
 
         MessageContext context = MessageContext.getCurrentContext();
 
-        if(context!=null && context.containsProperty(HTTPConstants.MC_HTTP_SERVLETREQUEST)) {
+        if (context != null && context.containsProperty(HTTPConstants.MC_HTTP_SERVLETREQUEST)) {
             HttpServletRequest servletReq = (HttpServletRequest)
                     context.getProperty(HTTPConstants.MC_HTTP_SERVLETREQUEST);
 
@@ -127,6 +105,34 @@ public class InotificacionSISImpl implements InotificacionSIS {
         }
 
         return remoteAddr;
+    }
+
+    private AppConfig getAppConfig() {
+
+        if (appConfig == null) {
+            Package[] packages = Package.getPackages();
+            Reflections reflections;
+            Set<Class<? extends AppConfig>> classes = new HashSet<>();
+            for (Package packageP : packages) { //¿No hay algo más efectivo para hacer esto?
+                reflections = new Reflections(packageP.getName());
+                classes.addAll(reflections.getSubTypesOf(AppConfig.class));
+            }
+
+            if (classes.size() == 0) {
+                _log.log(Level.SEVERE, "Ninguna clase en el classpath implementa AppConfig");
+            } else if (classes.size() > 1) {
+                _log.log(Level.SEVERE, "Mas de una clase en el classpath implementa AppConfig");
+            } else {
+                Class<? extends AppConfig> aClass = classes.iterator().next();
+                try {
+                    appConfig = aClass.newInstance();
+                } catch (InstantiationException | IllegalAccessException e) {
+                    _log.log(Level.SEVERE, "No se ha podido instanciar la clase que implementa AppConfig");
+                }
+            }
+        }
+
+        return appConfig;
     }
 
     private static final Logger _log = Logger.getLogger(InotificacionSISImpl.class.getName());

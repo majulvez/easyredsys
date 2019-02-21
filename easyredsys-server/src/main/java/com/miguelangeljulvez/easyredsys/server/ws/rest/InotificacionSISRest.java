@@ -7,7 +7,6 @@ import com.miguelangeljulvez.easyredsys.client.util.ResponseCodes;
 import com.miguelangeljulvez.easyredsys.server.util.SecurityUtil;
 import org.reflections.Reflections;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -22,32 +21,7 @@ import java.util.logging.Logger;
 @Path("/InotificacionSIS")
 public class InotificacionSISRest {
 
-    //@Inject
-    private AppConfig appConfig;
-
-    public InotificacionSISRest() {
-
-        Package[] packages = Package.getPackages();
-        Reflections reflections;
-        Set<Class<? extends AppConfig>> classes = new HashSet<>();
-        for (Package packageP: packages) { //¿No hay algo más efectivo para hacer esto?
-            reflections = new Reflections(packageP.getName());
-            classes.addAll(reflections.getSubTypesOf(AppConfig.class));
-        }
-
-        if (classes.size() == 0) {
-            _log.log(Level.SEVERE, "Ninguna clase en el classpath implementa AppConfig");
-        } else if (classes.size() > 1) {
-            _log.log(Level.SEVERE, "Mas de una clase en el classpath implementa AppConfig");
-        } else {
-            Class<? extends AppConfig> aClass = classes.iterator().next();
-            try {
-                appConfig = aClass.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
-                _log.log(Level.SEVERE, "No se ha podido instanciar la clase que implementa AppConfig");
-            }
-        }
-    }
+    AppConfig appConfig;
 
     @POST
     public Response notificar(
@@ -69,12 +43,16 @@ public class InotificacionSISRest {
         }
 
         String password;
-        if (appConfig == null) {
+        if (getAppConfig() == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
             _log.log(Level.WARNING, "Usando password por defecto de la pasarela de test: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'");
             password = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
         } else {
-            password = AppConfig.getSecretKey();
+            if (!getAppConfig().isTestMode()) {
+                password = getAppConfig().getSecretKey();
+            } else {
+                password = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
+            }
         }
 
         MessageOrderCESResponse messageOrderCESResponse = new MessageOrderCESResponse(ds_SignatureVersion, ds_Signature, ds_MerchantParameters, password);
@@ -90,19 +68,47 @@ public class InotificacionSISRest {
         _log.info("Notificación válida recibida para la order: " + messageOrderCESResponse.getOperationCES().getDs_Order());
 
         if (!ResponseCodes.isSuccessResponse(messageOrderCESResponse.getOperationCES().getDs_Response())) {
-            _log.log(Level.WARNING, "OperationException: Response code de error");
+            _log.log(Level.WARNING, "OperationException: Response code de error: " + messageOrderCESResponse.getOperationCES().getDs_Response());
 
             throw new SecurityException(ResponseCodes.getErrorResponseMessage(messageOrderCESResponse.getOperationCES().getDs_Response()));
         }
 
-        if (appConfig == null) {
+        if (getAppConfig() == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
             _log.log(Level.WARNING, "No hay nada que hacer con la notificación recibida");
         } else {
-            appConfig.saveNotification(messageOrderCESResponse.getOperationCES());
+            getAppConfig().saveNotification(messageOrderCESResponse.getOperationCES());
         }
 
         return Response.status(200).build();
+    }
+
+    private AppConfig getAppConfig() {
+
+        if (appConfig == null) {
+            Package[] packages = Package.getPackages();
+            Reflections reflections;
+            Set<Class<? extends AppConfig>> classes = new HashSet<>();
+            for (Package packageP : packages) { //¿No hay algo más efectivo para hacer esto?
+                reflections = new Reflections(packageP.getName());
+                classes.addAll(reflections.getSubTypesOf(AppConfig.class));
+            }
+
+            if (classes.size() == 0) {
+                _log.log(Level.SEVERE, "Ninguna clase en el classpath implementa AppConfig");
+            } else if (classes.size() > 1) {
+                _log.log(Level.SEVERE, "Mas de una clase en el classpath implementa AppConfig");
+            } else {
+                Class<? extends AppConfig> aClass = classes.iterator().next();
+                try {
+                    appConfig = aClass.newInstance();
+                } catch (InstantiationException | IllegalAccessException e) {
+                    _log.log(Level.SEVERE, "No se ha podido instanciar la clase que implementa AppConfig");
+                }
+            }
+        }
+
+        return appConfig;
     }
 
     private static final Logger _log = Logger.getLogger(InotificacionSISRest.class.getName());
