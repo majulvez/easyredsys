@@ -19,32 +19,7 @@ import java.util.logging.Logger;
 
 public class InotificacionSISBindingImpl implements InotificacionSISPortType {
 
-    //@Inject - No funcionaría porque el bean no lo crea el contenedor
     private AppConfig appConfig;
-
-    public InotificacionSISBindingImpl() {
-
-        Package[] packages = Package.getPackages();
-        Reflections reflections;
-        Set<Class<? extends AppConfig>> classes = new HashSet<>();
-        for (Package packageP: packages) { //¿No hay algo más efectivo para hacer esto?
-            reflections = new Reflections(packageP.getName());
-            classes.addAll(reflections.getSubTypesOf(AppConfig.class));
-        }
-
-        if (classes.size() == 0) {
-            _log.log(Level.SEVERE, "Ninguna clase en el classpath implementa AppConfig");
-        } else if (classes.size() > 1) {
-            _log.log(Level.SEVERE, "Mas de una clase en el classpath implementa AppConfig");
-        } else {
-            Class<? extends AppConfig> aClass = classes.iterator().next();
-            try {
-                appConfig = aClass.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
-                _log.log(Level.SEVERE, "No se ha podido instanciar la clase que implementa AppConfig");
-            }
-        }
-    }
 
     public String procesaNotificacionSIS(String XML) throws java.rmi.RemoteException {
 
@@ -60,12 +35,12 @@ public class InotificacionSISBindingImpl implements InotificacionSISPortType {
         }
 
         String clave;
-        if (appConfig == null) {
+        if (getAppConfig() == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
             _log.log(Level.WARNING, "Usando password por defecto de la pasarela de test: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'");
             clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
         } else {
-            clave = appConfig.getSecretKey();
+            clave = getAppConfig().getSecretKey();
         }
 
         MessageOrderSOAPRequest messageOrderSOAPRequest = new MessageOrderSOAPRequest(XML, clave);
@@ -86,11 +61,11 @@ public class InotificacionSISBindingImpl implements InotificacionSISPortType {
             throw new SecurityException(ResponseCodes.getErrorResponseMessage(messageOrderSOAPRequest.getNotificationSOAP().getDs_Response()));
         }
 
-        if (appConfig == null) {
+        if (getAppConfig() == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
             _log.log(Level.WARNING, "No hay nada que hacer con la notificación recibida");
         } else {
-            appConfig.saveNotification(messageOrderSOAPRequest.getNotificationSOAP());
+            getAppConfig().saveNotification(messageOrderSOAPRequest.getNotificationSOAP());
         }
 
         OrderSOAP orderSOAP = new OrderSOAP(messageOrderSOAPRequest.getNotificationSOAP().getDs_Order());
@@ -124,6 +99,34 @@ public class InotificacionSISBindingImpl implements InotificacionSISPortType {
         }
 
         return remoteAddr;
+    }
+
+    private AppConfig getAppConfig() {
+
+        if (appConfig == null) {
+            Package[] packages = Package.getPackages();
+            Reflections reflections;
+            Set<Class<? extends AppConfig>> classes = new HashSet<>();
+            for (Package packageP : packages) { //¿No hay algo más efectivo para hacer esto?
+                reflections = new Reflections(packageP.getName());
+                classes.addAll(reflections.getSubTypesOf(AppConfig.class));
+            }
+
+            if (classes.size() == 0) {
+                _log.log(Level.SEVERE, "Ninguna clase en el classpath implementa AppConfig");
+            } else if (classes.size() > 1) {
+                _log.log(Level.SEVERE, "Mas de una clase en el classpath implementa AppConfig");
+            } else {
+                Class<? extends AppConfig> aClass = classes.iterator().next();
+                try {
+                    appConfig = aClass.newInstance();
+                } catch (InstantiationException | IllegalAccessException e) {
+                    _log.log(Level.SEVERE, "No se ha podido instanciar la clase que implementa AppConfig");
+                }
+            }
+        }
+
+        return appConfig;
     }
 
     private static final Logger _log = Logger.getLogger(InotificacionSISBindingImpl.class.getName());
