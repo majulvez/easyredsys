@@ -103,21 +103,17 @@ public class MessageOrderNoCESRequest {
 
         public Builder(Class<? extends AppConfig> userActionClass) {
             try {
-                Method isTestMode = userActionClass.getDeclaredMethod("isTestMode");
-                isTestMode.setAccessible(true);
-                Method getSecretKey = userActionClass.getDeclaredMethod("getSecretKey");
-                getSecretKey.setAccessible(true);
+                AppConfig appConfig = userActionClass.newInstance();
 
-                this.testMode = (boolean)isTestMode.invoke(null);
-                if (!testMode)
-                    this.claveSecreta = (String) getSecretKey.invoke(null);
-                else
+                this.claveSecreta = appConfig.getSecretKey();
+                this.testMode = appConfig.isTestMode();
+
+                if (testMode) {
                     this.claveSecreta = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                }
             } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
                 e.printStackTrace();
             }
         }
