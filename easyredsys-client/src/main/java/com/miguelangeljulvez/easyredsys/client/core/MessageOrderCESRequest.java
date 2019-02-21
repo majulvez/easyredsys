@@ -105,6 +105,10 @@ public class MessageOrderCESRequest {
 
                 this.claveSecreta = appConfig.getSecretKey();
                 this.testMode = appConfig.isTestMode();
+
+                if (testMode) {
+                    this.claveSecreta = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
+                }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {

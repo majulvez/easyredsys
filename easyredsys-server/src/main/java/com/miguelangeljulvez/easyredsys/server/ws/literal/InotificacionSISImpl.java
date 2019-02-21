@@ -42,7 +42,11 @@ public class InotificacionSISImpl implements InotificacionSIS {
             _log.log(Level.WARNING, "Usando password por defecto de la pasarela de test: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'");
             clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
         } else {
-            clave = getAppConfig().getSecretKey();
+            if (!getAppConfig().isTestMode()) {
+                clave = getAppConfig().getSecretKey();
+            } else {
+                clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
+            }
         }
 
         MessageOrderSOAPRequest messageOrderSOAPRequest = new MessageOrderSOAPRequest(datoEntrada, clave);

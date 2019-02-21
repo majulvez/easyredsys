@@ -49,7 +49,11 @@ public class InotificacionSISRest {
             _log.log(Level.WARNING, "Usando password por defecto de la pasarela de test: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'");
             password = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
         } else {
-            password = getAppConfig().getSecretKey();
+            if (!getAppConfig().isTestMode()) {
+                password = getAppConfig().getSecretKey();
+            } else {
+                password = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
+            }
         }
 
         MessageOrderCESResponse messageOrderCESResponse = new MessageOrderCESResponse(ds_SignatureVersion, ds_Signature, ds_MerchantParameters, password);
