@@ -8,8 +8,9 @@ import com.miguelangeljulvez.easyredsys.client.core.OrderNoCESConfirmation;
 import com.miguelangeljulvez.easyredsys.client.util.Currency;
 import com.miguelangeljulvez.easyredsys.client.util.TransactionType;
 import com.miguelangeljulvez.easyredsys.client.ws.EasyRedsysService;
-import org.junit.*;
-import org.junit.rules.ExpectedException;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.Random;
 

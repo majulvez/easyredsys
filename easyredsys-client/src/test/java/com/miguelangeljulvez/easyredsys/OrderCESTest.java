@@ -9,8 +9,6 @@ import com.miguelangeljulvez.easyredsys.client.util.PaymentMethod;
 import com.miguelangeljulvez.easyredsys.client.util.TransactionType;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.*;

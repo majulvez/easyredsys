@@ -4,12 +4,13 @@ package com.miguelangeljulvez.easyredsys;
 import com.miguelangeljulvez.easyredsys.client.OperationException;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderNoCESRequest;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderNoCESResponse;
-import com.miguelangeljulvez.easyredsys.client.core.OrderNoCES;
 import com.miguelangeljulvez.easyredsys.client.core.OrderNoCESRecurrence;
 import com.miguelangeljulvez.easyredsys.client.util.Currency;
 import com.miguelangeljulvez.easyredsys.client.util.TransactionType;
 import com.miguelangeljulvez.easyredsys.client.ws.EasyRedsysService;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.Random;
 

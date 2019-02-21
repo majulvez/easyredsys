@@ -7,9 +7,6 @@ import com.miguelangeljulvez.easyredsys.client.util.Language;
 import com.miguelangeljulvez.easyredsys.client.util.PaymentMethod;
 import com.miguelangeljulvez.easyredsys.client.util.TransactionType;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 /*
 ** Orden de compra usando compra CES sin usar servicios web
  */
