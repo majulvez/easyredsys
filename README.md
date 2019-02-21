@@ -42,19 +42,23 @@ import com.miguelangeljulvez.easyredsys.client.AppConfig;
 
 public class AppConfigImpl implements AppConfig {
 
-    String getMerchantCode() {
+    @Override
+    public String getMerchantCode() {
         return "061978060";
     }
 
-    String getTerminal() {
+    @Override
+    public String getTerminal() {
         return "001";
     }
 
-    String getSecretKey() {
+    @Override
+    public String getSecretKey() {
         return "23423524234"; //Si testMode está establecido a true, no se usa. Se usa la clave de pruebas por defecto.
     }
 
-    boolean isTestMode() {
+    @Override
+    public boolean isTestMode() {
          return true; //Establécelo a false cuando quieras pasar a real
     }
 
