@@ -69,11 +69,13 @@
             com.sun.xml.ws.transport.http.servlet.WSServletContextListener
         </listener-class>
     </listener>
+
     <servlet>
         <servlet-name>wsServlet</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>wsServlet</servlet-name>
         <url-pattern>/literal/InotificacionSIS</url-pattern>

@@ -64,6 +64,10 @@
 
     <!-- web service jax ws 2.2 -->
 
+    <listener>
+        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>wsServlet</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
