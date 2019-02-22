@@ -13,8 +13,10 @@ import org.reflections.Reflections;
 
 import javax.jws.WebService;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.File;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -110,24 +112,24 @@ public class InotificacionSISImpl implements InotificacionSIS {
     private AppConfig getAppConfig() {
 
         if (appConfig == null) {
+
             Package[] packages = Package.getPackages();
             Reflections reflections;
-            Set<Class<? extends AppConfig>> classes = new HashSet<>();
             for (Package packageP : packages) { //¿No hay algo más efectivo para hacer esto?
                 reflections = new Reflections(packageP.getName());
-                classes.addAll(reflections.getSubTypesOf(AppConfig.class));
-            }
 
-            if (classes.size() == 0) {
-                _log.log(Level.SEVERE, "Ninguna clase en el classpath implementa AppConfig");
-            } else if (classes.size() > 1) {
-                _log.log(Level.SEVERE, "Mas de una clase en el classpath implementa AppConfig");
-            } else {
-                Class<? extends AppConfig> aClass = classes.iterator().next();
-                try {
-                    appConfig = aClass.newInstance();
-                } catch (InstantiationException | IllegalAccessException e) {
-                    _log.log(Level.SEVERE, "No se ha podido instanciar la clase que implementa AppConfig");
+                Set<Class<? extends AppConfig>> subTypesOf = reflections.getSubTypesOf(AppConfig.class);
+
+                if (subTypesOf.size() > 1) {
+                    _log.log(Level.SEVERE, "Mas de una clase en el classpath implementa AppConfig. Revisa tu aplicación");
+                    return null;
+                } else if (subTypesOf.size() == 1) {
+                    try {
+                        appConfig = subTypesOf.iterator().next().newInstance();
+                        return appConfig;
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        _log.log(Level.SEVERE, "No se ha podido instanciar la clase que implementa AppConfig");
+                    }
                 }
             }
         }
