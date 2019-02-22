@@ -31,7 +31,7 @@ Añade como dependencia maven lo siguiente
 <dependency>
   <group>com.miguelangeljulvez.easyredsys</group>
   <name>easyredsys-client</name>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
 </dependency>
 ```
 
@@ -148,7 +148,7 @@ Si se produjera alguna excepción, la descripción del error aparecerá en los l
 <dependency>
   <group>com.miguelangeljulvez.easyredsys</group>
   <name>easyredsys-server</name>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
 </dependency>
 ```
 
