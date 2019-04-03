@@ -34,10 +34,10 @@ public class ResponseCodes {
         errorResponseCodes.put("202", "202");
         errorResponseCodes.put("904", "904");
         errorResponseCodes.put("909", "909");
+        errorResponseCodes.put("912", "912");
         errorResponseCodes.put("913", "913");
         errorResponseCodes.put("944", "944");
         errorResponseCodes.put("950", "950");
-        errorResponseCodes.put("912", "912");
         errorResponseCodes.put("0101", "101");
         errorResponseCodes.put("0102", "102");
         errorResponseCodes.put("0104", "104");
