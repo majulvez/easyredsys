@@ -25,7 +25,7 @@ public enum Language {
     GREEK("300"),
     HUNGARIAN("348"),
     JAPANESE("392"),
-    LATVIAN("440"),
+    LATVIAN("428"),
     LITHUANIAN("440"),
     MALTESE("470"),
     ROMANIAN("642"),
