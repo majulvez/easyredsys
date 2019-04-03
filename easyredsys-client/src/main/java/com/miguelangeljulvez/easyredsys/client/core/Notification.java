@@ -12,6 +12,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +26,8 @@ public abstract class Notification {
 
     protected final ApiMacSha256 apiMacSha256 = new ApiMacSha256();
 
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private static DateTimeFormatter formatterEpochTime = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYmm");
 
     @XmlElement(name = "Ds_Date")
     public String getDs_Date() {
@@ -266,16 +272,47 @@ public abstract class Notification {
         try {
             String dateString = URLDecoder.decode(getDs_Date() + " " + getDs_Hour(), "UTF-8"); //Hora de la peticion en madrid
 
-            Date date = simpleDateFormat.parse(dateString);
+            LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatterEpochTime);
+            ZonedDateTime zdt = localDateTime.atZone(ZoneId.of("Europe/Madrid"));
 
-            epochTime = date.getTime();
-        } catch (ParseException e) {
-            _log.log(Level.WARNING, e.getMessage(), e);
+            epochTime = zdt.toInstant().toEpochMilli();
         } catch (UnsupportedEncodingException e) {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
 
         return epochTime;
+    }
+
+    @XmlElement(name = "Ds_merchant_identifier")
+    public String getDs_merchant_identifier() {
+        String ds_merchant_identifier = "";
+        try {
+            ds_merchant_identifier = apiMacSha256.getParameter("Ds_merchant_identifier");
+        } catch (JSONException e) {
+        }
+        return ds_merchant_identifier;
+    }
+
+    public void setDs_merchant_identifier(String ds_merchant_identifier) {
+        apiMacSha256.setParameter("Ds_merchant_identifier", ds_merchant_identifier);
+    }
+
+    @XmlElement(name = "Ds_ExpiryDate")
+    public LocalDate getDs_ExpiryDate() {
+        LocalDate ds_ExpiryDate = null;
+        try {
+            String ds_ExpiryDateStr = apiMacSha256.getParameter("Ds_ExpiryDate");
+
+            if (ds_ExpiryDateStr != null && !ds_ExpiryDateStr.trim().isEmpty()) {
+                ds_ExpiryDate = LocalDate.parse("ds_ExpiryDateStr", formatter);
+            }
+        } catch (JSONException e) {
+        }
+        return ds_ExpiryDate;
+    }
+
+    public void setDs_ExpiryDate(String ds_ExpiryDate) {
+        apiMacSha256.setParameter("Ds_ExpiryDate", ds_ExpiryDate);
     }
 
     protected ApiMacSha256 getApiMacSha256() {
@@ -342,6 +379,12 @@ public abstract class Notification {
         sb.append(System.lineSeparator());
         sb.append("Ds_Card_Type:");
         sb.append(getDs_Card_Type());
+        sb.append(System.lineSeparator());
+        sb.append("Ds_Merchant_Identifier:");
+        sb.append(getDs_merchant_identifier());
+        sb.append(System.lineSeparator());
+        sb.append("Ds_ExpiryDate:");
+        sb.append(getDs_ExpiryDate());
         sb.append(System.lineSeparator());
 
         return sb.toString();

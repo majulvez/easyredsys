@@ -151,12 +151,12 @@ public abstract class Order {
     }
 
     @XmlElement(name = "DS_MERCHANT_DIRECTPAYMENT")
-    public String getDs_merchant_directpayment() {
-        return apiMacSha256.getParameter("DS_MERCHANT_DIRECTPAYMENT");
+    public Boolean getDs_merchant_directpayment() {
+        return Boolean.valueOf(apiMacSha256.getParameter("DS_MERCHANT_DIRECTPAYMENT"));
     }
 
-    public void setDs_merchant_directpayment(String ds_merchant_directpaymen) {
-        apiMacSha256.setParameter("DS_MERCHANT_DIRECTPAYMENT", ds_merchant_directpaymen);
+    public void setDs_merchant_directpayment(boolean ds_merchant_directpaymen) {
+        apiMacSha256.setParameter("DS_MERCHANT_DIRECTPAYMENT", String.valueOf(ds_merchant_directpaymen));
     }
 
     @Override
