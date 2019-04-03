@@ -21,6 +21,10 @@ public abstract class Order {
         apiMacSha256.setParameter("DS_MERCHANT_PRODUCTDESCRIPTION", "");
         apiMacSha256.setParameter("DS_MERCHANT_TITULAR", "");
         apiMacSha256.setParameter("DS_MERCHANT_MERCHANTDATA", "");
+
+        apiMacSha256.setParameter("DS_MERCHANT_IDENTIFIER", "");
+        apiMacSha256.setParameter("DS_MERCHANT_GROUP", "");
+        apiMacSha256.setParameter("DS_MERCHANT_DIRECTPAYMENT", "");
     }
 
     public String getDs_SignatureVersion() {
@@ -128,6 +132,33 @@ public abstract class Order {
         apiMacSha256.setParameter("DS_MERCHANT_MERCHANTDATA", ds_merchant_merchantdata);
     }
 
+    @XmlElement(name = "DS_MERCHANT_IDENTIFIER")
+    public String getDs_merchant_identifier() {
+        return apiMacSha256.getParameter("DS_MERCHANT_IDENTIFIER");
+    }
+
+    public void setDs_merchant_identifier(String ds_merchant_identifier) {
+        apiMacSha256.setParameter("DS_MERCHANT_IDENTIFIER", ds_merchant_identifier);
+    }
+
+    @XmlElement(name = "DS_MERCHANT_GROUP")
+    public String getDs_merchant_group() {
+        return apiMacSha256.getParameter("DS_MERCHANT_GROUP");
+    }
+
+    public void setDs_merchant_group(String ds_merchant_group) {
+        apiMacSha256.setParameter("DS_MERCHANT_GROUP", ds_merchant_group);
+    }
+
+    @XmlElement(name = "DS_MERCHANT_DIRECTPAYMENT")
+    public String getDs_merchant_directpayment() {
+        return apiMacSha256.getParameter("DS_MERCHANT_DIRECTPAYMENT");
+    }
+
+    public void setDs_merchant_directpayment(String ds_merchant_directpaymen) {
+        apiMacSha256.setParameter("DS_MERCHANT_DIRECTPAYMENT", ds_merchant_directpaymen);
+    }
+
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
@@ -158,6 +189,15 @@ public abstract class Order {
         sb.append(System.lineSeparator());
         sb.append("DS_MERCHANT_MERCHANTDATA:");
         sb.append(getDs_merchant_merchantdata());
+        sb.append(System.lineSeparator());
+        sb.append("DS_MERCHANT_IDENTIFIER:");
+        sb.append(getDs_merchant_identifier());
+        sb.append(System.lineSeparator());
+        sb.append("DS_MERCHANT_GROUP:");
+        sb.append(getDs_merchant_group());
+        sb.append(System.lineSeparator());
+        sb.append("DS_MERCHANT_DIRECTPAYMENT:");
+        sb.append(getDs_merchant_directpayment());
         sb.append(System.lineSeparator());
 
         return sb.toString();
