@@ -122,6 +122,8 @@ public class ErrorCodes  {
         errorCodes.put("SIS0270", "SIS0270");
         errorCodes.put("SIS0274", "SIS0274");
         errorCodes.put("SIS0429", "SIS0429");
+        errorCodes.put("SIS0430", "SIS0430");
+        errorCodes.put("SIS0431", "SIS0431");
         errorCodes.put("SIS0432", "SIS0432");
         errorCodes.put("SIS0433", "SIS0433");
         errorCodes.put("SIS0434", "SIS0434");
@@ -130,6 +132,24 @@ public class ErrorCodes  {
         errorCodes.put("SIS0437", "SIS0437");
         errorCodes.put("SIS0438", "SIS0438");
         errorCodes.put("SIS0439", "SIS0439");
+        errorCodes.put("SIS0444", "SIS0444");
+        errorCodes.put("SIS0448", "SIS0448");
+        errorCodes.put("SIS0449", "SIS0449");
+        errorCodes.put("SIS0450", "SIS0450");
+        errorCodes.put("SIS0452", "SIS0452");
+        errorCodes.put("SIS0453", "SIS0453");
+        errorCodes.put("SIS0454", "SIS0454");
+        errorCodes.put("SIS0455", "SIS0455");
+        errorCodes.put("SIS0456", "SIS0456");
+        errorCodes.put("SIS0457", "SIS0457");
+        errorCodes.put("SIS0458", "SIS0458");
+        errorCodes.put("SIS0459", "SIS0459");
+        errorCodes.put("SIS0460", "SIS0460");
+        errorCodes.put("SIS0461", "SIS0461");
+        errorCodes.put("SIS0462", "SIS0462");
+        errorCodes.put("SIS0463", "SIS0463");
+        errorCodes.put("SIS0464", "SIS0464");
+        errorCodes.put("SIS0465", "SIS0465");
     }
 
     private ErrorCodes() {}
