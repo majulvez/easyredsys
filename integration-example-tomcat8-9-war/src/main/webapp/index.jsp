@@ -17,7 +17,7 @@
             .order(String.valueOf(getRandomOrder()))
             .amount(1000) //Equivalente a 10.00€
             .productDescription("Product description")
-            .payMethods(PaymentMethod.TARJETA)
+            .paymentMethods(PaymentMethod.TARJETA)
             .urlOk("https://easyredsys.miguelangeljulvez.com/easyredsys/response-ces-ok.jsp")
             .urlKo("https://easyredsys.miguelangeljulvez.com/easyredsys/response-ces-error.jsp")
             .urlNotification("https://easyredsys.miguelangeljulvez.com/easyredsys/rest/InotificacionSIS")

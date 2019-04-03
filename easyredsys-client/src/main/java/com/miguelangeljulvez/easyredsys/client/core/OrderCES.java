@@ -114,7 +114,10 @@ public final class OrderCES extends Order {
         private String urlKo;
         private String urlNotification;
         private String productDescription;
-        private String payMethods;
+        private String paymentMethods;
+        private String _1_click_identifier;
+        private String _1_click_group;
+        private boolean _1_click_directPayment;
 
         public Builder() {}
 
@@ -187,10 +190,26 @@ public final class OrderCES extends Order {
             return this;
         }
 
-        public Builder payMethods(final PaymentMethod paymentMethods) {
-            this.payMethods = paymentMethods.getCode();
+        public Builder paymentMethods(final PaymentMethod paymentMethods) {
+            this.paymentMethods = paymentMethods.getCode();
             return this;
         }
+
+        public Builder _1_click_identifier(final String _1_click_identifier) {
+            this._1_click_identifier = _1_click_identifier;
+            return this;
+        }
+
+        public Builder _1_click_group(final String _1_click_group) {
+            this._1_click_group = _1_click_group;
+            return this;
+        }
+
+        public Builder _1_click_directPayment(final boolean _1_click_directPayment) {
+            this._1_click_directPayment = _1_click_directPayment;
+            return this;
+        }
+
 
         public OrderCES build() {
             OrderCES orderCES =  new OrderCES();
@@ -205,7 +224,10 @@ public final class OrderCES extends Order {
             orderCES.setDs_merchant_UrlOK(urlOk);
             orderCES.setDs_merchant_UrlKO(urlKo);
             orderCES.setDs_merchant_productdescription(productDescription);
-            orderCES.setDs_merchant_paymethods(payMethods);
+            orderCES.setDs_merchant_paymethods(paymentMethods);
+            orderCES.setDs_merchant_identifier(_1_click_identifier);
+            orderCES.setDs_merchant_group(_1_click_group);
+            orderCES.setDs_merchant_directpayment(_1_click_directPayment);
 
             //TODO - Lanzar error de validación
 

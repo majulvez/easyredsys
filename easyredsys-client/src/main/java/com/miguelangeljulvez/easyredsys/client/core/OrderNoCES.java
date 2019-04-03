@@ -77,6 +77,9 @@ public class OrderNoCES extends Order {
         private String cardNumber = "";
         private String cvv2 = "";
         private String expiryDate = "";
+        private String _1_click_identifier;
+        private String _1_click_group;
+        private boolean _1_click_directPayment;
 
         public Builder() {}
 
@@ -138,6 +141,21 @@ public class OrderNoCES extends Order {
             return this;
         }
 
+        public Builder _1_click_identifier(final String _1_click_identifier) {
+            this._1_click_identifier = _1_click_identifier;
+            return this;
+        }
+
+        public Builder _1_click_group(final String _1_click_group) {
+            this._1_click_group = _1_click_group;
+            return this;
+        }
+
+        public Builder _1_click_directPayment(final boolean _1_click_directPayment) {
+            this._1_click_directPayment = _1_click_directPayment;
+            return this;
+        }
+
         public OrderNoCES build() {
             OrderNoCES orderNoCES =  new OrderNoCES();
             orderNoCES.setDs_merchant_merchantcode(merchantCode);
@@ -149,6 +167,9 @@ public class OrderNoCES extends Order {
             orderNoCES.setDs_merchant_pan(cardNumber);
             orderNoCES.setDs_merchant_cvv2(cvv2);
             orderNoCES.setDs_merchant_expirydate(expiryDate);
+            orderNoCES.setDs_merchant_identifier(_1_click_identifier);
+            orderNoCES.setDs_merchant_group(_1_click_group);
+            orderNoCES.setDs_merchant_directpayment(_1_click_directPayment);
 
             //TODO - Lanzar error de validación
 
