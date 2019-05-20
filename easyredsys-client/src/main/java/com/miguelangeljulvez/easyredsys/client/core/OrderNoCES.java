@@ -86,8 +86,6 @@ public class OrderNoCES extends Order {
 
     public static class Builder {
 
-        private long merchantCode;
-        private long terminal;
         private String transactionType = "";
         private long currency;
         private String order = "";
@@ -104,16 +102,6 @@ public class OrderNoCES extends Order {
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-        }
-
-        public Builder merchantCode(final String merchantCode) {
-            this.merchantCode = Long.valueOf(merchantCode);
-            return this;
-        }
-
-        public Builder terminal(final String terminal) {
-            this.terminal = Long.valueOf(terminal);
-            return this;
         }
 
         public Builder transactionType(final TransactionType transactionType) {
@@ -153,8 +141,8 @@ public class OrderNoCES extends Order {
 
         public OrderNoCES build() {
             OrderNoCES orderNoCES =  new OrderNoCES();
-            orderNoCES.setDs_merchant_merchantcode(merchantCode);
-            orderNoCES.setDs_merchant_terminal(terminal);
+            orderNoCES.setDs_merchant_merchantcode(Long.valueOf(appConfig.getMerchantCode()));
+            orderNoCES.setDs_merchant_terminal(Long.valueOf(appConfig.getTerminal()));
             orderNoCES.setDs_merchant_transactiontype(transactionType);
             orderNoCES.setDs_merchant_currency(currency);
             orderNoCES.setDs_merchant_order(order);

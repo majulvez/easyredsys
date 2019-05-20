@@ -30,6 +30,8 @@ public class MessageOrderCESRequest {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
 
+        System.out.println("merchanParameters: " + merchanParameters);
+
         return merchanParameters;
     }
 
@@ -37,11 +39,22 @@ public class MessageOrderCESRequest {
 
         String dsSignature = "";
 
+        String clave;
+        if (!orderCES.getAppConfig().isTestMode()) {
+            clave = orderCES.getAppConfig().getSecretKey();
+        } else {
+            clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
+        }
+
+        System.out.println("clave: " + clave);
+
         try {
-            dsSignature = orderCES.apiMacSha256.createMerchantSignature(orderCES.getAppConfig().getSecretKey());
+            dsSignature = orderCES.apiMacSha256.createMerchantSignature(clave);
         } catch (UnsupportedEncodingException | InvalidKeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchPaddingException | BadPaddingException | IllegalBlockSizeException e) {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
+
+        System.out.println("dsSignature: " + dsSignature);
 
         return dsSignature;
     }
@@ -59,7 +72,7 @@ public class MessageOrderCESRequest {
     }
 
     public String getRedsysUrl() { //TODO - Al fichero de propieades
-        if (orderCES.appConfig.isTestMode()) {
+        if (orderCES.getAppConfig().isTestMode()) {
             return RedsysAddresses.getRedirectURL("test");
         } else {
             return RedsysAddresses.getRedirectURL("pro");

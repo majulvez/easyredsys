@@ -79,9 +79,9 @@ public class OrderNoCESAuthorizationTest {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = createOperation();
 
-        OrderNoCESConfirmation orderNoCES = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCES = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getNotificationNoCES())
                 .transactionType(TransactionType.CONFIRMACION_AUTORIZACION_DIFERIDO)
-                .order(messageOrderNoCESResponse.getOperationNoCES().getDs_Order())
+                .order(messageOrderNoCESResponse.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .cardNumber("4548812049400004")
                 .cvv2("123")
@@ -108,9 +108,9 @@ public class OrderNoCESAuthorizationTest {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = createOperation();
 
-        OrderNoCESConfirmation orderNoCES = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCES = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getNotificationNoCES())
                 .transactionType(TransactionType.ANULACION_AUTORIZACION_DIFERIDO)
-                .order(messageOrderNoCESResponse.getOperationNoCES().getDs_Order())
+                .order(messageOrderNoCESResponse.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .cardNumber("4548812049400004")
                 .cvv2("123")

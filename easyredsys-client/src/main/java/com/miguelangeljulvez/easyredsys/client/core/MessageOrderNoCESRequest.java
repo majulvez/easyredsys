@@ -39,12 +39,19 @@ public class MessageOrderNoCESRequest {
     @XmlElement(name = "DS_SIGNATURE")
     public String getDs_Signature() {
 
-        System.out.println("La clave es: " + orderNoCES.getAppConfig().getSecretKey());
+        String clave;
+        if (!orderNoCES.getAppConfig().isTestMode()) {
+            clave = orderNoCES.getAppConfig().getSecretKey();
+        } else {
+            clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
+        }
+
+        System.out.println("La clave es: " + clave);
         System.out.println("Lo que se cifra: " + XMLUtil.toRedsysXML(orderNoCES));
 
         String ds_signature = "";
         try {
-            ds_signature = apiWsMacSha256.createMerchantSignatureHostToHost(orderNoCES.getAppConfig().getSecretKey(), XMLUtil.toRedsysXML(orderNoCES));
+            ds_signature = apiWsMacSha256.createMerchantSignatureHostToHost(clave, XMLUtil.toRedsysXML(orderNoCES));
 
             System.out.println("Genero: " + ds_signature);
         } catch (UnsupportedEncodingException | InvalidKeyException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | BadPaddingException | NoSuchPaddingException e) {

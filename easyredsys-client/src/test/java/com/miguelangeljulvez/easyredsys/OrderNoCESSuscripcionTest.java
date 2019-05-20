@@ -53,9 +53,9 @@ public class OrderNoCESSuscripcionTest {
 
         MessageOrderNoCESResponse responseTransaccionRecurrente = createOperation();
 
-        OrderNoCESRecurrence orderNoCESRecurrence = new OrderNoCESRecurrence.Builder(responseTransaccionRecurrente.getOperationNoCES())
+        OrderNoCESRecurrence orderNoCESRecurrence = new OrderNoCESRecurrence.Builder(responseTransaccionRecurrente.getNotificationNoCES())
                 .transactionType(TransactionType.CUOTA_SUCESIVA)
-                .order(responseTransaccionRecurrente.getOperationNoCES().getDs_Order())
+                .order(responseTransaccionRecurrente.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .build();
 
@@ -109,9 +109,9 @@ public class OrderNoCESSuscripcionTest {
 
         MessageOrderNoCESResponse responseTransaccionRecurrente = createOperationDiferido();
 
-        OrderNoCESRecurrence orderNoCESRecurrence = new OrderNoCESRecurrence.Builder(responseTransaccionRecurrente.getOperationNoCES())
+        OrderNoCESRecurrence orderNoCESRecurrence = new OrderNoCESRecurrence.Builder(responseTransaccionRecurrente.getNotificationNoCES())
                 .transactionType(TransactionType.CUOTA_SUCESIVA)
-                .order(responseTransaccionRecurrente.getOperationNoCES().getDs_Order())
+                .order(responseTransaccionRecurrente.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .cardNumber("4548812049400004")
                 .cvv2("123")

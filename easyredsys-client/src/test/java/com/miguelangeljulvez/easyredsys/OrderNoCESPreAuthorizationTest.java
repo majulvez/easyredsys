@@ -50,9 +50,9 @@ public class OrderNoCESPreAuthorizationTest {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = createOperation();
 
-        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getNotificationNoCES())
                 .transactionType(TransactionType.CONFIRMACION_PRE_AUTORIZACION)
-                .order(messageOrderNoCESResponse.getOperationNoCES().getDs_Order())
+                .order(messageOrderNoCESResponse.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .build();
 
@@ -75,9 +75,9 @@ public class OrderNoCESPreAuthorizationTest {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = createOperation();
 
-        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getNotificationNoCES())
                 .transactionType(TransactionType.ANULACION_PRE_AUTORIZACION)
-                .order(messageOrderNoCESResponse.getOperationNoCES().getDs_Order())
+                .order(messageOrderNoCESResponse.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .build();
 

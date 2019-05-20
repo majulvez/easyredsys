@@ -22,9 +22,9 @@ public class OrderNoCESDevolucionTest {
 
         MessageOrderNoCESResponse responseAutorizacion = createOperation();
 
-        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(responseAutorizacion.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(responseAutorizacion.getNotificationNoCES())
                 .transactionType(TransactionType.DEVOLUCION_AUTOMATICA)
-                .order(responseAutorizacion.getOperationNoCES().getDs_Order())
+                .order(responseAutorizacion.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .build();
 

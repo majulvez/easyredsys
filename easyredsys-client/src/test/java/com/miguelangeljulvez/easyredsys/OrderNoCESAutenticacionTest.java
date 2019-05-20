@@ -52,9 +52,9 @@ public class OrderNoCESAutenticacionTest {
 
         MessageOrderNoCESResponse responseAutorizacion = createOperation();
 
-        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(responseAutorizacion.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(responseAutorizacion.getNotificationNoCES())
                 .transactionType(TransactionType.CONFIRMACION_PRE_AUTENTICACION)
-                .order(responseAutorizacion.getOperationNoCES().getDs_Order())
+                .order(responseAutorizacion.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .cardNumber("4548812049400004")
                 .cvv2("123")

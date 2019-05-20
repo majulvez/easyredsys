@@ -1,6 +1,5 @@
 package com.miguelangeljulvez.easyredsys.client.ws;
 
-import com.miguelangeljulvez.easyredsys.client.AppConfig;
 import com.miguelangeljulvez.easyredsys.client.OperationException;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderNoCESRequest;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderNoCESResponse;
@@ -23,7 +22,7 @@ public class EasyRedsysService {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = internalRequest(messageOrderNoCESRequest);
 
-        messageOrderNoCESRequest.getOrderNoCES().getAppConfig().saveNotification(messageOrderNoCESResponse.getOperationNoCES());
+        messageOrderNoCESRequest.getOrderNoCES().getAppConfig().saveNotification(messageOrderNoCESResponse.getNotificationNoCES());
 
         return messageOrderNoCESResponse;
     }
@@ -54,7 +53,16 @@ public class EasyRedsysService {
 
         System.out.println(responseServiceXML);
 
-        MessageOrderNoCESResponse messageOrderNoCESResponse = new MessageOrderNoCESResponse(responseServiceXML, messageOrderNoCESRequest.getOrderNoCES().getAppConfig().getSecretKey());
+        String clave;
+        if (!messageOrderNoCESRequest.getOrderNoCES().getAppConfig().isTestMode()) {
+            clave = messageOrderNoCESRequest.getOrderNoCES().getAppConfig().getSecretKey();
+        } else {
+            clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
+        }
+
+        System.out.println("Trabajando con la clave: " + clave);
+
+        MessageOrderNoCESResponse messageOrderNoCESResponse = new MessageOrderNoCESResponse(responseServiceXML, clave);
 
         switch (messageOrderNoCESResponse.getCodigo()) {
             case "0":
@@ -74,10 +82,10 @@ public class EasyRedsysService {
         }
 
 
-        if (!ResponseCodes.isSuccessResponse(messageOrderNoCESResponse.getOperationNoCES().getDs_Response())) {
+        if (!ResponseCodes.isSuccessResponse(messageOrderNoCESResponse.getNotificationNoCES().getDs_Response())) {
             _log.log(Level.WARNING, "OperationException: Response code de error");
 
-            throw new OperationException(messageOrderNoCESResponse.getOperationNoCES().getDs_Response(), ResponseCodes.getErrorResponseMessage(messageOrderNoCESResponse.getOperationNoCES().getDs_Response()));
+            throw new OperationException(messageOrderNoCESResponse.getNotificationNoCES().getDs_Response(), ResponseCodes.getErrorResponseMessage(messageOrderNoCESResponse.getNotificationNoCES().getDs_Response()));
         }
 
         return messageOrderNoCESResponse;
