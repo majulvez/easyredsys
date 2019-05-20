@@ -23,9 +23,7 @@
             .urlNotification("https://easyredsys.miguelangeljulvez.com/easyredsys/rest/InotificacionSIS")
             .build();
 
-    MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(AppConfigImpl.class)
-            .withOrder(orderCES)
-            .build();
+    MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(orderCES).build();
 %>
 
 <!DOCTYPE html>

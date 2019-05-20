@@ -34,9 +34,7 @@
             .expiryDate(year+month)
             .build();
 
-    MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-            .withOrder(orderNoCES)
-            .build();
+    MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 %>
 
 <body class="text-center">
@@ -45,7 +43,7 @@
 <p>
 <%
     try {
-        EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+        EasyRedsysService.request(messageOrderNoCESRequest);
         out.write("Congratulations! Everything worked!");
     } catch (OperationException e) {
         out.write("Ups... something was wrong. Error code: " + e.getCode() + "-" + e.getMessage());
