@@ -27,18 +27,9 @@ public class MessageOrderNoCESRequest {
 
     private final ApiWsMacSha256 apiWsMacSha256 = new ApiWsMacSha256();
 
-    private volatile String claveSecreta;
-
-    private volatile boolean testMode = true;
-
     private OrderNoCES orderNoCES;
 
-    public MessageOrderNoCESRequest(OrderNoCES orderNoCES, String claveSecreta) {
-        this.orderNoCES = orderNoCES;
-        this.claveSecreta = claveSecreta;
-    }
-
-    public MessageOrderNoCESRequest() {}
+    private MessageOrderNoCESRequest() {}
 
     @XmlElement(name = "DS_SIGNATUREVERSION")
     public String getDs_SignatureVersion() {
@@ -48,9 +39,14 @@ public class MessageOrderNoCESRequest {
     @XmlElement(name = "DS_SIGNATURE")
     public String getDs_Signature() {
 
+        System.out.println("La clave es: " + orderNoCES.getAppConfig().getSecretKey());
+        System.out.println("Lo que se cifra: " + XMLUtil.toRedsysXML(orderNoCES));
+
         String ds_signature = "";
         try {
-            ds_signature = apiWsMacSha256.createMerchantSignatureHostToHost(claveSecreta, XMLUtil.toRedsysXML(orderNoCES));
+            ds_signature = apiWsMacSha256.createMerchantSignatureHostToHost(orderNoCES.getAppConfig().getSecretKey(), XMLUtil.toRedsysXML(orderNoCES));
+
+            System.out.println("Genero: " + ds_signature);
         } catch (UnsupportedEncodingException | InvalidKeyException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | BadPaddingException | NoSuchPaddingException e) {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
@@ -67,77 +63,26 @@ public class MessageOrderNoCESRequest {
         this.orderNoCES = orderNoCES;
     }
 
-    @XmlTransient
-    public boolean isTestMode() {
-        return testMode;
-    }
-
-    public void setTestMode(boolean testMode) {
-        this.testMode = testMode;
-    }
 
     @XmlTransient
     public String getRedsysUrl() {
-        if (testMode) {
+        if (orderNoCES.getAppConfig().isTestMode()) {
             return RedsysAddresses.getWebserviceURL("test");
         } else {
             return RedsysAddresses.getWebserviceURL("pro");
         }
     }
 
-    @XmlTransient
-    public String getClaveSecreta() {
-        return claveSecreta;
-    }
-
-    public void setClaveSecreta(String claveSecreta) {
-        this.claveSecreta = claveSecreta;
-    }
-
     public static class Builder {
         private OrderNoCES orderNoCES;
-        private String claveSecreta;
-        private boolean testMode;
 
-        public Builder() {}
-
-        public Builder(Class<? extends AppConfig> userActionClass) {
-            try {
-                AppConfig appConfig = userActionClass.newInstance();
-
-                this.claveSecreta = appConfig.getSecretKey();
-                this.testMode = appConfig.isTestMode();
-
-                if (testMode) {
-                    this.claveSecreta = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public Builder withOrder(OrderNoCES orderNoCES) {
+        public Builder(OrderNoCES orderNoCES) {
             this.orderNoCES = orderNoCES;
-            return this;
-        }
-
-        public Builder secretKey(String claveSecreta) {
-            this.claveSecreta = claveSecreta;
-            return this;
-        }
-
-        public Builder testMode(boolean testMode) {
-            this.testMode = testMode;
-            return this;
         }
 
         public MessageOrderNoCESRequest build() {
             MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest();
-            messageOrderNoCESRequest.setClaveSecreta(claveSecreta);
             messageOrderNoCESRequest.setOrderNoCES(orderNoCES);
-            messageOrderNoCESRequest.setTestMode(testMode);
 
             return messageOrderNoCESRequest;
         }

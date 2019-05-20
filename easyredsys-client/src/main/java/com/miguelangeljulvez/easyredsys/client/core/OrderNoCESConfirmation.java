@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 @XmlRootElement(name = "DATOSENTRADA")
 public class OrderNoCESConfirmation extends OrderNoCES {
 
-    public OrderNoCESConfirmation() { //Inicializamos por no tocar las librerías de redsys
+    protected OrderNoCESConfirmation() { //Inicializamos por no tocar las librerías de redsys
         apiMacSha256.setParameter("DS_MERCHANT_AUTHORISATIONCODE", "");
     }
 
@@ -38,28 +38,14 @@ public class OrderNoCESConfirmation extends OrderNoCES {
         private String cvv2 = "";
         private String expiryDate = "";
 
-        public Builder() {}
+        private AppConfig appConfig;
 
         public Builder(Class<? extends AppConfig> userActionClass) {
             try {
-                Method getMerchantCode = userActionClass.getDeclaredMethod("getMerchantCode");
-                getMerchantCode.setAccessible(true);
-                Method getTerminal = userActionClass.getDeclaredMethod("getTerminal");
-                getTerminal.setAccessible(true);
-
-                this.merchantCode = Long.valueOf((String) getMerchantCode.invoke(null));
-                this.terminal = Long.valueOf((String) getTerminal.invoke(null));
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+                this.appConfig = userActionClass.newInstance();
+            } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
             }
-        }
-
-        public Builder(String ds_merchant_authorisationcode) {
-            this.ds_merchant_authorisationcode = ds_merchant_authorisationcode;
         }
 
         public Builder(NotificationNoCES notificationNoCES) {
@@ -127,6 +113,7 @@ public class OrderNoCESConfirmation extends OrderNoCES {
             orderNoCESConfirmation.setDs_merchant_pan(cardNumber);
             orderNoCESConfirmation.setDs_merchant_cvv2(cvv2);
             orderNoCESConfirmation.setDs_merchant_expirydate(expiryDate);
+            orderNoCESConfirmation.setAppConfig(appConfig);
 
             return orderNoCESConfirmation;
         }

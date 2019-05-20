@@ -19,25 +19,18 @@ public class EasyRedsysService {
 
     private EasyRedsysService(){}
 
-    public static synchronized MessageOrderNoCESResponse request(MessageOrderNoCESRequest messageOrderNoCESRequest, Class<? extends AppConfig> userActionClass) throws OperationException {
+    public static synchronized MessageOrderNoCESResponse request(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
 
-        AppConfig appConfig;
-        try {
-            appConfig = userActionClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            _log.log(Level.WARNING, "Error al instanciar la clase AppConfig. Debes crear una clase que implemente la interface AppConfig");
+        MessageOrderNoCESResponse messageOrderNoCESResponse = internalRequest(messageOrderNoCESRequest);
 
-            throw new OperationException("ER-2", e.getMessage());
-        }
-
-        MessageOrderNoCESResponse messageOrderNoCESResponse = request(messageOrderNoCESRequest);
-
-        appConfig.saveNotification(messageOrderNoCESResponse.getOperationNoCES());
+        messageOrderNoCESRequest.getOrderNoCES().getAppConfig().saveNotification(messageOrderNoCESResponse.getOperationNoCES());
 
         return messageOrderNoCESResponse;
     }
 
-    protected static synchronized MessageOrderNoCESResponse request(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
+    protected static synchronized MessageOrderNoCESResponse internalRequest(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
+
+        System.out.println(messageOrderNoCESRequest.getRedsysUrl());
 
         SerClsWSEntrada service;
         try {
@@ -53,20 +46,26 @@ public class EasyRedsysService {
 
         _log.log(Level.FINEST, "XML Request: " + requestServiceXML);
 
+        System.out.println(requestServiceXML);
+
         String responseServiceXML = service.trataPeticion(requestServiceXML);
 
         _log.log(Level.FINEST, "XML Response: " + responseServiceXML);
 
-        MessageOrderNoCESResponse messageOrderNoCESResponse = new MessageOrderNoCESResponse(responseServiceXML, messageOrderNoCESRequest.getClaveSecreta());
+        System.out.println(responseServiceXML);
+
+        MessageOrderNoCESResponse messageOrderNoCESResponse = new MessageOrderNoCESResponse(responseServiceXML, messageOrderNoCESRequest.getOrderNoCES().getAppConfig().getSecretKey());
 
         switch (messageOrderNoCESResponse.getCodigo()) {
             case "0":
                 break;
             default:
-                _log.log(Level.WARNING, "OperationException: Código de error");
+                _log.log(Level.WARNING, "OperationException: Código de error " + messageOrderNoCESResponse.getCodigo());
 
                 throw new OperationException(messageOrderNoCESResponse.getCodigo(), ErrorCodes.getErrorMessage(messageOrderNoCESResponse.getCodigo()));
         }
+
+        System.out.println("la comunicación es correcta");
 
         if (!messageOrderNoCESResponse.isValid()) {
             _log.log(Level.WARNING, "OperationException: La firma recibida por el servidor no es válida");

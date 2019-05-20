@@ -65,28 +65,14 @@ public final class OrderNoCESRecurrence extends OrderNoCESConfirmation {
         private String chargeexpirydate = "";
         private String transactiondate = "";
 
-        public Builder() {}
+        private AppConfig appConfig;
 
         public Builder(Class<? extends AppConfig> userActionClass) {
             try {
-                Method getMerchantCode = userActionClass.getDeclaredMethod("getMerchantCode");
-                getMerchantCode.setAccessible(true);
-                Method getTerminal = userActionClass.getDeclaredMethod("getTerminal");
-                getTerminal.setAccessible(true);
-
-                this.merchantCode = Long.valueOf((String) getMerchantCode.invoke(null));
-                this.terminal = Long.valueOf((String) getTerminal.invoke(null));
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+                this.appConfig = userActionClass.newInstance();
+            } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
             }
-        }
-
-        public Builder(String authorisationcode) {
-            this.authorisationcode = authorisationcode;
         }
 
         public Builder(NotificationNoCES notificationNoCES) {
@@ -178,6 +164,7 @@ public final class OrderNoCESRecurrence extends OrderNoCESConfirmation {
             orderNoCESRecurrence.setDs_merchant_datefrecuency(datefrecuency);
             orderNoCESRecurrence.setDs_merchant_chargeexpirydate(chargeexpirydate);
             orderNoCESRecurrence.setDs_merchant_transactiondate(transactiondate);
+            orderNoCESRecurrence.setAppConfig(appConfig);
 
             return orderNoCESRecurrence;
         }

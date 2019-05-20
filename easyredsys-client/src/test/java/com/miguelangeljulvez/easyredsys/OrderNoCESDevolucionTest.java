@@ -28,13 +28,11 @@ public class OrderNoCESDevolucionTest {
                 .amount(1000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCESConfirmation)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCESConfirmation).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse responseDevolucion = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse responseDevolucion = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = responseDevolucion.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -66,11 +64,9 @@ public class OrderNoCESDevolucionTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
-        return EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+        return EasyRedsysService.request(messageOrderNoCESRequest);
 
     }
 }

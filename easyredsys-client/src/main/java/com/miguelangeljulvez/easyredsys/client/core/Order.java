@@ -1,14 +1,18 @@
 package com.miguelangeljulvez.easyredsys.client.core;
 
+import com.miguelangeljulvez.easyredsys.client.AppConfig;
 import sis.redsys.api.ApiMacSha256;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 public abstract class Order {
 
     protected final static String ds_SignatureVersion = "HMAC_SHA256_V1";
 
     protected final ApiMacSha256 apiMacSha256 = new ApiMacSha256();
+
+    protected AppConfig appConfig;
 
     public Order() {
         //Inicializamos por no tocar las librerías de redsys
@@ -126,6 +130,15 @@ public abstract class Order {
 
     public void setDs_merchant_merchantdata(String ds_merchant_merchantdata) {
         apiMacSha256.setParameter("DS_MERCHANT_MERCHANTDATA", ds_merchant_merchantdata);
+    }
+
+    @XmlTransient
+    public AppConfig getAppConfig() {
+        return appConfig;
+    }
+
+    public void setAppConfig(AppConfig appConfig) {
+        this.appConfig = appConfig;
     }
 
     @Override

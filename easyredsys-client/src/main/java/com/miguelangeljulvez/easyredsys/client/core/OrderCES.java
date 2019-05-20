@@ -116,21 +116,15 @@ public final class OrderCES extends Order {
         private String productDescription;
         private String payMethods;
 
-        public Builder() {}
+        private AppConfig appConfig;
 
         public Builder(Class<? extends AppConfig> userActionClass) {
             try {
-                AppConfig appConfig = userActionClass.newInstance();
-
-                this.merchantCode = Long.valueOf(appConfig.getMerchantCode());
-                this.terminal = Long.valueOf(appConfig.getTerminal());
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
+                this.appConfig = userActionClass.newInstance();
+            } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
             }
         }
-
 
         public Builder merchantCode(final String merchantCode) {
             this.merchantCode = Long.valueOf(merchantCode);
@@ -206,6 +200,7 @@ public final class OrderCES extends Order {
             orderCES.setDs_merchant_UrlKO(urlKo);
             orderCES.setDs_merchant_productdescription(productDescription);
             orderCES.setDs_merchant_paymethods(payMethods);
+            orderCES.setAppConfig(appConfig);
 
             //TODO - Lanzar error de validación
 

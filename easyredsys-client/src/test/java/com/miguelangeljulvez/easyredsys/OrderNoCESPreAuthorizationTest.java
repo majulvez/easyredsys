@@ -31,13 +31,11 @@ public class OrderNoCESPreAuthorizationTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -58,13 +56,11 @@ public class OrderNoCESPreAuthorizationTest {
                 .amount(1000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCESConfirmation)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCESConfirmation).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -85,13 +81,11 @@ public class OrderNoCESPreAuthorizationTest {
                 .amount(1000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCESConfirmation)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCESConfirmation).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -111,11 +105,9 @@ public class OrderNoCESPreAuthorizationTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
-        return EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+        return EasyRedsysService.request(messageOrderNoCESRequest);
 
     }
 
