@@ -37,13 +37,11 @@ public class OrderNoCESTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
         String codigo = null;
         try {
-            MessageOrderNoCESResponse messageOrderNoCESResponse = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse messageOrderNoCESResponse = EasyRedsysService.request(messageOrderNoCESRequest);
 
             codigo = messageOrderNoCESResponse.getCodigo();
         } catch (OperationException e) {
@@ -68,13 +66,11 @@ public class OrderNoCESTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
         String codigo = null;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
 
             codigo = response.getCodigo();
         } catch (OperationException e) {
@@ -94,13 +90,11 @@ public class OrderNoCESTest {
                 .order(getRandomOrder())
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
         String codigo = null;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
 
             codigo = response.getCodigo();
         } catch (OperationException e) {

@@ -1,6 +1,7 @@
 package com.miguelangeljulvez.easyredsys.server.ws.axis;
 
 import com.miguelangeljulvez.easyredsys.client.AppConfig;
+import com.miguelangeljulvez.easyredsys.client.util.EasyredsysUtil;
 import com.miguelangeljulvez.easyredsys.client.util.ResponseCodes;
 import com.miguelangeljulvez.easyredsys.server.core.MessageOrderSOAPRequest;
 import com.miguelangeljulvez.easyredsys.server.core.MessageOrderSOAPResponse;
@@ -34,18 +35,11 @@ public class InotificacionSISBindingImpl implements InotificacionSISPortType {
             throw new SecurityException("Acceso a la url de notificación desde ips no autorizadas");
         }
 
-        String clave;
         if (getAppConfig() == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
             _log.log(Level.WARNING, "Usando password por defecto de la pasarela de test: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'");
-            clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
-        } else {
-            if (!getAppConfig().isTestMode()) {
-                clave = getAppConfig().getSecretKey();
-            } else {
-                clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
-            }
         }
+        String clave = EasyredsysUtil.getSecretyKey(getAppConfig());
 
         MessageOrderSOAPRequest messageOrderSOAPRequest = new MessageOrderSOAPRequest(XML, clave);
 

@@ -34,13 +34,11 @@ public class OrderNoCESSuscripcionTest {
                 .sumtotal(10000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCESRecurrence)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCESRecurrence).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -55,19 +53,17 @@ public class OrderNoCESSuscripcionTest {
 
         MessageOrderNoCESResponse responseTransaccionRecurrente = createOperation();
 
-        OrderNoCESRecurrence orderNoCESRecurrence = new OrderNoCESRecurrence.Builder(responseTransaccionRecurrente.getOperationNoCES())
+        OrderNoCESRecurrence orderNoCESRecurrence = new OrderNoCESRecurrence.Builder(responseTransaccionRecurrente.getNotificationNoCES())
                 .transactionType(TransactionType.CUOTA_SUCESIVA)
-                .order(responseTransaccionRecurrente.getOperationNoCES().getDs_Order())
+                .order(responseTransaccionRecurrente.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCESRecurrence)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCESRecurrence).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -94,13 +90,11 @@ public class OrderNoCESSuscripcionTest {
                 .sumtotal(10000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCESRecurrence)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCESRecurrence).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -115,9 +109,9 @@ public class OrderNoCESSuscripcionTest {
 
         MessageOrderNoCESResponse responseTransaccionRecurrente = createOperationDiferido();
 
-        OrderNoCESRecurrence orderNoCESRecurrence = new OrderNoCESRecurrence.Builder(responseTransaccionRecurrente.getOperationNoCES())
+        OrderNoCESRecurrence orderNoCESRecurrence = new OrderNoCESRecurrence.Builder(responseTransaccionRecurrente.getNotificationNoCES())
                 .transactionType(TransactionType.CUOTA_SUCESIVA)
-                .order(responseTransaccionRecurrente.getOperationNoCES().getDs_Order())
+                .order(responseTransaccionRecurrente.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .cardNumber("4548812049400004")
                 .cvv2("123")
@@ -128,13 +122,11 @@ public class OrderNoCESSuscripcionTest {
                 .sumtotal(10000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCESRecurrence)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCESRecurrence).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -158,11 +150,9 @@ public class OrderNoCESSuscripcionTest {
                 .sumtotal(10000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
-        return EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+        return EasyRedsysService.request(messageOrderNoCESRequest);
     }
 
     private MessageOrderNoCESResponse createOperationDiferido() throws OperationException {
@@ -180,11 +170,9 @@ public class OrderNoCESSuscripcionTest {
                 .sumtotal(10000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
-        return EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+        return EasyRedsysService.request(messageOrderNoCESRequest);
     }
 
     private String getRandomOrder() {

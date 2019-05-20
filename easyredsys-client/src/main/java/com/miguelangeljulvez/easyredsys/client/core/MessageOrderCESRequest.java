@@ -1,8 +1,7 @@
 package com.miguelangeljulvez.easyredsys.client.core;
 
 
-import com.miguelangeljulvez.easyredsys.client.AppConfig;
-import com.miguelangeljulvez.easyredsys.client.util.RedsysAddresses;
+import com.miguelangeljulvez.easyredsys.client.util.EasyredsysUtil;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -16,17 +15,9 @@ import java.util.logging.Logger;
 
 public class MessageOrderCESRequest {
 
-    private volatile String claveSecreta;
-    private volatile boolean testMode = true;
-
     private OrderCES orderCES;
 
-    public MessageOrderCESRequest(OrderCES orderCES, String claveSecreta) {
-        this.orderCES = orderCES;
-        this.claveSecreta = claveSecreta;
-    }
-
-    public MessageOrderCESRequest() {}
+    private MessageOrderCESRequest() {}
 
     public String getDs_MerchantParameters() {
 
@@ -46,7 +37,7 @@ public class MessageOrderCESRequest {
         String dsSignature = "";
 
         try {
-            dsSignature = orderCES.apiMacSha256.createMerchantSignature(claveSecreta);
+            dsSignature = orderCES.apiMacSha256.createMerchantSignature(EasyredsysUtil.getSecretyKey(orderCES));
         } catch (UnsupportedEncodingException | InvalidKeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchPaddingException | BadPaddingException | IllegalBlockSizeException e) {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
@@ -66,74 +57,20 @@ public class MessageOrderCESRequest {
         this.orderCES = orderCES;
     }
 
-    public boolean isTestMode() {
-        return testMode;
-    }
-
-    public void setTestMode(boolean testMode) {
-        this.testMode = testMode;
-    }
-
-    public String getRedsysUrl() { //TODO - Al fichero de propieades
-        if (testMode) {
-            return RedsysAddresses.getRedirectURL("test");
-        } else {
-            return RedsysAddresses.getRedirectURL("pro");
-        }
-    }
-
-    public String getClaveSecreta() {
-        return claveSecreta;
-    }
-
-    public void setClaveSecreta(String claveSecreta) {
-        this.claveSecreta = claveSecreta;
+    public String getRedsysUrl() {
+        return EasyredsysUtil.getRedirectURL(orderCES.getAppConfig().isTestMode());
     }
 
     public static class Builder {
         private OrderCES orderCES;
-        private String claveSecreta;
-        private boolean testMode;
 
-        public Builder() {}
-
-        public Builder(Class<? extends AppConfig> userActionClass) {
-            try {
-                AppConfig appConfig = userActionClass.newInstance();
-
-                this.claveSecreta = appConfig.getSecretKey();
-                this.testMode = appConfig.isTestMode();
-
-                if (testMode) {
-                    this.claveSecreta = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public Builder withOrder(OrderCES orderCES) {
+        public Builder(OrderCES orderCES) {
             this.orderCES = orderCES;
-            return this;
-        }
-
-        public Builder secretKey(String claveSecreta) {
-            this.claveSecreta = claveSecreta;
-            return this;
-        }
-
-        public Builder testMode(boolean testMode) {
-            this.testMode = testMode;
-            return this;
         }
 
         public MessageOrderCESRequest build() {
             MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest();
-            messageOrderCESRequest.setClaveSecreta(claveSecreta);
             messageOrderCESRequest.setOrderCES(orderCES);
-            messageOrderCESRequest.setTestMode(testMode);
 
             return messageOrderCESRequest;
         }

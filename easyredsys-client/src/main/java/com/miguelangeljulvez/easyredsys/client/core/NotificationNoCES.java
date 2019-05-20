@@ -59,6 +59,20 @@ public final class NotificationNoCES extends Notification {
         apiMacSha256.setParameter("Ds_CardNumber", ds_cardNumber);
     }
 
+    @XmlElement(name = "Ds_MerchantData")
+    public String getDs_MerchantData() {
+        String ds_MerchantData = "";
+        try {
+            ds_MerchantData = apiMacSha256.getParameter("Ds_MerchantData");
+        } catch (JSONException e) {
+        }
+        return ds_MerchantData;
+    }
+
+    public void setDs_MerchantData(String ds_MerchantData) {
+        apiMacSha256.setParameter("Ds_MerchantData", ds_MerchantData);
+    }
+
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();

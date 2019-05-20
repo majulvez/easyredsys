@@ -2,7 +2,7 @@
 
 Esta librería facilita la integración con la pasarela de pago Redsys para aplicaciones Java.
 
-Permite realizar compras CES, compras No CES, autorizaciones devoluciones, pagos diferidos y pagos recurrentes
+Permite realizar compras CES, compras No CES con envío de datos de la tarjeta, autorizaciones, devoluciones, pagos diferidos y pagos recurrentes
 
 ##Requisitos##
 
@@ -31,7 +31,7 @@ Añade como dependencia maven lo siguiente
 <dependency>
   <group>com.miguelangeljulvez.easyredsys</group>
   <name>easyredsys-client</name>
-  <version>1.2.2</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 
@@ -89,9 +89,7 @@ OrderCES orderCES = new OrderCES.Builder(AppConfigImpl.class)
                         .urlNotification(<La url de tu servicio de recogida de notificaciones>)
                         .build();
 
-MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest().Builder(AppConfigImpl.class)
-                                    .withOrder(orderCES)
-                                    .build();
+MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest().Builder(orderCES).build();
 ```
 
 2-Crear el formulario de envío para comunicarse con el banco
@@ -123,12 +121,10 @@ OrderNoCES orderNoCES = new OrderNoCES.Builder(AppConfigImpl.class)
             .expiryDate("2012")
             .build();
 
-MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
 try {
-    MessageOrderNoCESResponse messageOrderNoCESResponse = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+    MessageOrderNoCESResponse messageOrderNoCESResponse = EasyRedsysService.request(messageOrderNoCESRequest);
 } catch (OperationException e) {
     e.printStackTrace();
 }
@@ -148,7 +144,7 @@ Si se produjera alguna excepción, la descripción del error aparecerá en los l
 <dependency>
   <group>com.miguelangeljulvez.easyredsys</group>
   <name>easyredsys-server</name>
-  <version>1.2.2</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 

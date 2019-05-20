@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class XMLUtil {
 
-    public static synchronized String toRedsysXML(MessageOrderNoCESRequest message) {
+    public static String toRedsysXML(MessageOrderNoCESRequest message) {
 
         String msg = null;
         try {
@@ -41,15 +41,7 @@ public class XMLUtil {
         return msg;
     }
 
-    public static synchronized String toRedsysXML(Order order) {
-        if (order instanceof OrderNoCES) {
-            return toRedsysXML((OrderNoCES)order);
-        } else {
-            return "";
-        }
-    }
-
-    public static synchronized String toRedsysXML(OrderNoCES order) {
+    public static String toRedsysXML(OrderNoCES order) {
 
         String msg = null;
         try {
@@ -77,7 +69,7 @@ public class XMLUtil {
         return msg;
     }
 
-    public static synchronized MessageOrderNoCESResponse fromRedsysXMLOrderNoCES(String xml) {
+    public static MessageOrderNoCESResponse fromRedsysXMLOrderNoCES(String xml) {
 
         JAXBContext jaxbContext = null;
         MessageOrderNoCESResponse messageOrderNoCESResponse = null;
