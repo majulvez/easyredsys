@@ -266,6 +266,10 @@ public abstract class Notification {
         try {
             String dateString = URLDecoder.decode(getDs_Date() + " " + getDs_Hour(), "UTF-8"); //Hora de la peticion en madrid
 
+            if (dateString.trim().isEmpty()) {
+                return 0;
+            }
+
             Date date = simpleDateFormat.parse(dateString);
 
             epochTime = date.getTime();
