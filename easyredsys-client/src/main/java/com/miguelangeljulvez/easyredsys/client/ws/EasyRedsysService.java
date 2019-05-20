@@ -4,7 +4,7 @@ import com.miguelangeljulvez.easyredsys.client.OperationException;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderNoCESRequest;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderNoCESResponse;
 import com.miguelangeljulvez.easyredsys.client.util.ErrorCodes;
-import com.miguelangeljulvez.easyredsys.client.util.RedsysAddresses;
+import com.miguelangeljulvez.easyredsys.client.util.EasyredsysUtil;
 import com.miguelangeljulvez.easyredsys.client.util.ResponseCodes;
 import com.miguelangeljulvez.easyredsys.client.util.XMLUtil;
 import com.miguelangeljulvez.easyredsys.client.ws.client.SerClsWSEntrada;
@@ -33,7 +33,7 @@ public class EasyRedsysService {
 
         SerClsWSEntrada service;
         try {
-            URL location = new URL(RedsysAddresses.getWebserviceURL(messageOrderNoCESRequest.getRedsysUrl()));
+            URL location = new URL(EasyredsysUtil.getWebserviceURL(messageOrderNoCESRequest.getRedsysUrl()));
             SerClsWSEntradaService serClsWSEntradaService = new SerClsWSEntradaService(location);
             service = serClsWSEntradaService.getSerClsWSEntrada();
         } catch (Exception e) {
@@ -53,16 +53,9 @@ public class EasyRedsysService {
 
         System.out.println(responseServiceXML);
 
-        String clave;
-        if (!messageOrderNoCESRequest.getOrderNoCES().getAppConfig().isTestMode()) {
-            clave = messageOrderNoCESRequest.getOrderNoCES().getAppConfig().getSecretKey();
-        } else {
-            clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
-        }
+        System.out.println("Trabajando con la clave: " + EasyredsysUtil.getSecretyKey(messageOrderNoCESRequest.getOrderNoCES()));
 
-        System.out.println("Trabajando con la clave: " + clave);
-
-        MessageOrderNoCESResponse messageOrderNoCESResponse = new MessageOrderNoCESResponse(responseServiceXML, clave);
+        MessageOrderNoCESResponse messageOrderNoCESResponse = new MessageOrderNoCESResponse(responseServiceXML, EasyredsysUtil.getSecretyKey(messageOrderNoCESRequest.getOrderNoCES()));
 
         switch (messageOrderNoCESResponse.getCodigo()) {
             case "0":

@@ -1,8 +1,7 @@
 package com.miguelangeljulvez.easyredsys.client.core;
 
 
-import com.miguelangeljulvez.easyredsys.client.AppConfig;
-import com.miguelangeljulvez.easyredsys.client.util.RedsysAddresses;
+import com.miguelangeljulvez.easyredsys.client.util.EasyredsysUtil;
 import com.miguelangeljulvez.easyredsys.client.util.XMLUtil;
 import sis.redsys.api.ApiWsMacSha256;
 
@@ -14,8 +13,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -39,19 +36,12 @@ public class MessageOrderNoCESRequest {
     @XmlElement(name = "DS_SIGNATURE")
     public String getDs_Signature() {
 
-        String clave;
-        if (!orderNoCES.getAppConfig().isTestMode()) {
-            clave = orderNoCES.getAppConfig().getSecretKey();
-        } else {
-            clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
-        }
-
-        System.out.println("La clave es: " + clave);
+        System.out.println("La clave es: " + EasyredsysUtil.getSecretyKey(orderNoCES));
         System.out.println("Lo que se cifra: " + XMLUtil.toRedsysXML(orderNoCES));
 
         String ds_signature = "";
         try {
-            ds_signature = apiWsMacSha256.createMerchantSignatureHostToHost(clave, XMLUtil.toRedsysXML(orderNoCES));
+            ds_signature = apiWsMacSha256.createMerchantSignatureHostToHost(EasyredsysUtil.getSecretyKey(orderNoCES), XMLUtil.toRedsysXML(orderNoCES));
 
             System.out.println("Genero: " + ds_signature);
         } catch (UnsupportedEncodingException | InvalidKeyException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | BadPaddingException | NoSuchPaddingException e) {
@@ -74,9 +64,9 @@ public class MessageOrderNoCESRequest {
     @XmlTransient
     public String getRedsysUrl() {
         if (orderNoCES.getAppConfig().isTestMode()) {
-            return RedsysAddresses.getWebserviceURL("test");
+            return EasyredsysUtil.getWebserviceURL("test");
         } else {
-            return RedsysAddresses.getWebserviceURL("pro");
+            return EasyredsysUtil.getWebserviceURL("pro");
         }
     }
 

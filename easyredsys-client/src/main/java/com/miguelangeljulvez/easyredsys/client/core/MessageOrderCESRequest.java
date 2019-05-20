@@ -1,8 +1,7 @@
 package com.miguelangeljulvez.easyredsys.client.core;
 
 
-import com.miguelangeljulvez.easyredsys.client.AppConfig;
-import com.miguelangeljulvez.easyredsys.client.util.RedsysAddresses;
+import com.miguelangeljulvez.easyredsys.client.util.EasyredsysUtil;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -30,8 +29,6 @@ public class MessageOrderCESRequest {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
 
-        System.out.println("merchanParameters: " + merchanParameters);
-
         return merchanParameters;
     }
 
@@ -39,22 +36,11 @@ public class MessageOrderCESRequest {
 
         String dsSignature = "";
 
-        String clave;
-        if (!orderCES.getAppConfig().isTestMode()) {
-            clave = orderCES.getAppConfig().getSecretKey();
-        } else {
-            clave = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
-        }
-
-        System.out.println("clave: " + clave);
-
         try {
-            dsSignature = orderCES.apiMacSha256.createMerchantSignature(clave);
+            dsSignature = orderCES.apiMacSha256.createMerchantSignature(EasyredsysUtil.getSecretyKey(orderCES));
         } catch (UnsupportedEncodingException | InvalidKeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchPaddingException | BadPaddingException | IllegalBlockSizeException e) {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
-
-        System.out.println("dsSignature: " + dsSignature);
 
         return dsSignature;
     }
@@ -71,11 +57,11 @@ public class MessageOrderCESRequest {
         this.orderCES = orderCES;
     }
 
-    public String getRedsysUrl() { //TODO - Al fichero de propieades
+    public String getRedsysUrl() { //TODO - Al fichero de propiedades
         if (orderCES.getAppConfig().isTestMode()) {
-            return RedsysAddresses.getRedirectURL("test");
+            return EasyredsysUtil.getRedirectURL("test");
         } else {
-            return RedsysAddresses.getRedirectURL("pro");
+            return EasyredsysUtil.getRedirectURL("pro");
         }
     }
 

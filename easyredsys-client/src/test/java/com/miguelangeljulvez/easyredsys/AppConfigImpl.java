@@ -14,7 +14,7 @@ public class AppConfigImpl implements AppConfig {
     }
 
     public String getSecretKey() {
-        return "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
+        return "tu-clave-secreta-de-produccion";
     }
 
     public boolean isTestMode() { return true;}
