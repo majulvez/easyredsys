@@ -36,14 +36,9 @@ public class MessageOrderNoCESRequest {
     @XmlElement(name = "DS_SIGNATURE")
     public String getDs_Signature() {
 
-        System.out.println("La clave es: " + EasyredsysUtil.getSecretyKey(orderNoCES));
-        System.out.println("Lo que se cifra: " + XMLUtil.toRedsysXML(orderNoCES));
-
         String ds_signature = "";
         try {
             ds_signature = apiWsMacSha256.createMerchantSignatureHostToHost(EasyredsysUtil.getSecretyKey(orderNoCES), XMLUtil.toRedsysXML(orderNoCES));
-
-            System.out.println("Genero: " + ds_signature);
         } catch (UnsupportedEncodingException | InvalidKeyException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | BadPaddingException | NoSuchPaddingException e) {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
@@ -63,11 +58,7 @@ public class MessageOrderNoCESRequest {
 
     @XmlTransient
     public String getRedsysUrl() {
-        if (orderNoCES.getAppConfig().isTestMode()) {
-            return EasyredsysUtil.getWebserviceURL("test");
-        } else {
-            return EasyredsysUtil.getWebserviceURL("pro");
-        }
+        return EasyredsysUtil.getWebserviceURL(orderNoCES.getAppConfig().isTestMode());
     }
 
     public static class Builder {

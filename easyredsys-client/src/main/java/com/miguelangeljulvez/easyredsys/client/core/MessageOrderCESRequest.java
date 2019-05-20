@@ -57,12 +57,8 @@ public class MessageOrderCESRequest {
         this.orderCES = orderCES;
     }
 
-    public String getRedsysUrl() { //TODO - Al fichero de propiedades
-        if (orderCES.getAppConfig().isTestMode()) {
-            return EasyredsysUtil.getRedirectURL("test");
-        } else {
-            return EasyredsysUtil.getRedirectURL("pro");
-        }
+    public String getRedsysUrl() {
+        return EasyredsysUtil.getRedirectURL(orderCES.getAppConfig().isTestMode());
     }
 
     public static class Builder {

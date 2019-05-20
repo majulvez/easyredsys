@@ -11,28 +11,21 @@ public class EasyredsysUtil {
     private static final String testWebservice = "https://sis-t.redsys.es:25443/sis/services/SerClsWSEntrada";
     private static final String testRedirect = "https://sis-t.redsys.es:25443/sis/realizarPago";
 
-    private static final String intWebservice = "https://sis-t.redsys.es:25443/sis/services/SerClsWSEntrada";
-    private static final String intRedirect = "https://sis-i.redsys.es:25443/sis/realizarPago";
-
     private EasyredsysUtil(){}
 
-    public static String getWebserviceURL(String environment) {
-        if ("pro".equals(environment)) {
-            return proWebservice;
-        } else if ("int".equals(environment)) {
-            return intWebservice;
-        } else {
+    public static String getWebserviceURL(boolean testMode) {
+        if (testMode) {
             return testWebservice;
+        } else {
+            return proWebservice;
         }
     }
 
-    public static String getRedirectURL(String environment) {
-        if ("pro".equals(environment)) {
-            return proRedirect;
-        } else if ("int".equals(environment)) {
-            return intRedirect;
-        } else {
+    public static String getRedirectURL(boolean testMode) {
+        if (testMode) {
             return testRedirect;
+        } else {
+            return proRedirect;
         }
     }
 

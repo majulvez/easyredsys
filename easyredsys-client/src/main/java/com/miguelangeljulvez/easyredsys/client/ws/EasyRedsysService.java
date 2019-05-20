@@ -29,11 +29,9 @@ public class EasyRedsysService {
 
     protected static synchronized MessageOrderNoCESResponse internalRequest(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
 
-        System.out.println(messageOrderNoCESRequest.getRedsysUrl());
-
         SerClsWSEntrada service;
         try {
-            URL location = new URL(EasyredsysUtil.getWebserviceURL(messageOrderNoCESRequest.getRedsysUrl()));
+            URL location = new URL(EasyredsysUtil.getWebserviceURL(messageOrderNoCESRequest.getOrderNoCES().getAppConfig().isTestMode()));
             SerClsWSEntradaService serClsWSEntradaService = new SerClsWSEntradaService(location);
             service = serClsWSEntradaService.getSerClsWSEntrada();
         } catch (Exception e) {
@@ -45,15 +43,9 @@ public class EasyRedsysService {
 
         _log.log(Level.FINEST, "XML Request: " + requestServiceXML);
 
-        System.out.println(requestServiceXML);
-
         String responseServiceXML = service.trataPeticion(requestServiceXML);
 
         _log.log(Level.FINEST, "XML Response: " + responseServiceXML);
-
-        System.out.println(responseServiceXML);
-
-        System.out.println("Trabajando con la clave: " + EasyredsysUtil.getSecretyKey(messageOrderNoCESRequest.getOrderNoCES()));
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = new MessageOrderNoCESResponse(responseServiceXML, EasyredsysUtil.getSecretyKey(messageOrderNoCESRequest.getOrderNoCES()));
 
@@ -65,8 +57,6 @@ public class EasyRedsysService {
 
                 throw new OperationException(messageOrderNoCESResponse.getCodigo(), ErrorCodes.getErrorMessage(messageOrderNoCESResponse.getCodigo()));
         }
-
-        System.out.println("la comunicación es correcta");
 
         if (!messageOrderNoCESResponse.isValid()) {
             _log.log(Level.WARNING, "OperationException: La firma recibida por el servidor no es válida");
