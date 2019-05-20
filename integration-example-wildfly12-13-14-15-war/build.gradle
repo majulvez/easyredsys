@@ -14,10 +14,10 @@ dependencies {
     compile project(':easyredsys-client')
     compile project(':easyredsys-server')
 
-    compile group: 'com.sun.xml.ws', name: 'jaxws-rt', version: '2.3.0', ext: 'pom'
-
-    //compile 'com.miguelangeljulvez.easyredsys:easyredsys-client:1.1.0'
-    //compile 'com.miguelangeljulvez.easyredsys:easyredsys-server:1.1.0'
+    compile 'org.json:json:20180813'
+    compile 'com.sun.xml.ws:jaxws-rt:2.1.3'
+    //compile 'com.miguelangeljulvez.easyredsys:easyredsys-client:1.3.0'
+    //compile 'com.miguelangeljulvez.easyredsys:easyredsys-server:1.3.0'
 
     // JAX-RS 2.0(.1) - Añade esta dependencia si vas a utilizar Apache Tomcat
     //compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
@@ -40,4 +40,6 @@ dependencies {
     testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:2.2.2"
     testCompile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.3.2.Final'
     testCompile group: 'xerces', name: 'xercesImpl', version: '2.11.0'
+    
+    
 }
