@@ -103,8 +103,6 @@ public final class OrderCES extends Order {
 
     public static class Builder {
 
-        private long merchantCode;
-        private long terminal;
         private String transactionType;
         private long currency;
         private int consumerLanguage;
@@ -116,30 +114,14 @@ public final class OrderCES extends Order {
         private String productDescription;
         private String payMethods;
 
-        public Builder() {}
+        private AppConfig appConfig;
 
         public Builder(Class<? extends AppConfig> userActionClass) {
             try {
-                AppConfig appConfig = userActionClass.newInstance();
-
-                this.merchantCode = Long.valueOf(appConfig.getMerchantCode());
-                this.terminal = Long.valueOf(appConfig.getTerminal());
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
+                this.appConfig = userActionClass.newInstance();
+            } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
             }
-        }
-
-
-        public Builder merchantCode(final String merchantCode) {
-            this.merchantCode = Long.valueOf(merchantCode);
-            return this;
-        }
-
-        public Builder terminal(final String terminal) {
-            this.terminal = Long.valueOf(terminal);
-            return this;
         }
 
         public Builder transactionType(final TransactionType transactionType) {
@@ -194,8 +176,8 @@ public final class OrderCES extends Order {
 
         public OrderCES build() {
             OrderCES orderCES =  new OrderCES();
-            orderCES.setDs_merchant_merchantcode(merchantCode);
-            orderCES.setDs_merchant_terminal(terminal);
+            orderCES.setDs_merchant_merchantcode(Long.valueOf(appConfig.getMerchantCode()));
+            orderCES.setDs_merchant_terminal(Long.valueOf(appConfig.getTerminal()));
             orderCES.setDs_merchant_transactiontype(transactionType);
             orderCES.setDs_merchant_currency(currency);
             orderCES.setDs_merchant_consumerLanguage(consumerLanguage);
@@ -206,6 +188,7 @@ public final class OrderCES extends Order {
             orderCES.setDs_merchant_UrlKO(urlKo);
             orderCES.setDs_merchant_productdescription(productDescription);
             orderCES.setDs_merchant_paymethods(payMethods);
+            orderCES.setAppConfig(appConfig);
 
             //TODO - Lanzar error de validación
 

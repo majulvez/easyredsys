@@ -13,13 +13,13 @@ public final class MessageOrderNoCESResponse {
     private volatile String claveSecreta;
 
     private String codigo;
-    private NotificationNoCES operationNoCES;
+    private NotificationNoCES notificationNoCES;
 
     public MessageOrderNoCESResponse(String xml, String claveSecreta) {
         MessageOrderNoCESResponse messageOrderNoCESResponse = XMLUtil.fromRedsysXMLOrderNoCES(xml);
 
+        this.notificationNoCES = messageOrderNoCESResponse.getNotificationNoCES();
         this.codigo = messageOrderNoCESResponse.getCodigo();
-        this.operationNoCES = messageOrderNoCESResponse.getOperationNoCES();
         this.claveSecreta = claveSecreta;
     }
 
@@ -35,16 +35,16 @@ public final class MessageOrderNoCESResponse {
     }
 
     @XmlElement(name="OPERACION")
-    public NotificationNoCES getOperationNoCES() {
-        return operationNoCES;
+    public NotificationNoCES getNotificationNoCES() {
+        return notificationNoCES;
     }
 
-    public void setOperationNoCES(NotificationNoCES operationNoCES) {
-        this.operationNoCES = operationNoCES;
+    public void setNotificationNoCES(NotificationNoCES notificationNoCES) {
+        this.notificationNoCES = notificationNoCES;
     }
 
     public boolean isValid() {
-        return operationNoCES.isValid(claveSecreta, operationNoCES.getDs_Signature());
+        return notificationNoCES.isValid(claveSecreta, notificationNoCES.getDs_Signature());
     }
 
     private static final Logger _log = Logger.getLogger(MessageOrderNoCESResponse.class.getName());

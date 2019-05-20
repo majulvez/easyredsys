@@ -49,9 +49,7 @@ public class OrderCESTest {
                 .urlNotification("http://localhost:8080/easyredsys")
                 .build();
 
-        MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderCES)
-                .build();
+        MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(orderCES).build();
 
         Client client = ClientBuilder.newClient();
 
@@ -87,9 +85,7 @@ public class OrderCESTest {
                 .urlNotification("http://localhost:8080/easyredsys")
                 .build();
 
-        MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderCES)
-                .build();
+        MessageOrderCESRequest messageOrderCESRequest = new MessageOrderCESRequest.Builder(orderCES).build();
 
         Client client = ClientBuilder.newClient();
 

@@ -31,13 +31,11 @@ public class OrderNoCESPreAuthorizationTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -52,19 +50,17 @@ public class OrderNoCESPreAuthorizationTest {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = createOperation();
 
-        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getNotificationNoCES())
                 .transactionType(TransactionType.CONFIRMACION_PRE_AUTORIZACION)
-                .order(messageOrderNoCESResponse.getOperationNoCES().getDs_Order())
+                .order(messageOrderNoCESResponse.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCESConfirmation)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCESConfirmation).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -79,19 +75,17 @@ public class OrderNoCESPreAuthorizationTest {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = createOperation();
 
-        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCESConfirmation = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getNotificationNoCES())
                 .transactionType(TransactionType.ANULACION_PRE_AUTORIZACION)
-                .order(messageOrderNoCESResponse.getOperationNoCES().getDs_Order())
+                .order(messageOrderNoCESResponse.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCESConfirmation)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCESConfirmation).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -111,11 +105,9 @@ public class OrderNoCESPreAuthorizationTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
-        return EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+        return EasyRedsysService.request(messageOrderNoCESRequest);
 
     }
 

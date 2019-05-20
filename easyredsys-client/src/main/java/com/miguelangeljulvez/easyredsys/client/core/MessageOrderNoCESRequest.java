@@ -1,8 +1,7 @@
 package com.miguelangeljulvez.easyredsys.client.core;
 
 
-import com.miguelangeljulvez.easyredsys.client.AppConfig;
-import com.miguelangeljulvez.easyredsys.client.util.RedsysAddresses;
+import com.miguelangeljulvez.easyredsys.client.util.EasyredsysUtil;
 import com.miguelangeljulvez.easyredsys.client.util.XMLUtil;
 import sis.redsys.api.ApiWsMacSha256;
 
@@ -14,8 +13,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -27,18 +24,9 @@ public class MessageOrderNoCESRequest {
 
     private final ApiWsMacSha256 apiWsMacSha256 = new ApiWsMacSha256();
 
-    private volatile String claveSecreta;
-
-    private volatile boolean testMode = true;
-
     private OrderNoCES orderNoCES;
 
-    public MessageOrderNoCESRequest(OrderNoCES orderNoCES, String claveSecreta) {
-        this.orderNoCES = orderNoCES;
-        this.claveSecreta = claveSecreta;
-    }
-
-    public MessageOrderNoCESRequest() {}
+    private MessageOrderNoCESRequest() {}
 
     @XmlElement(name = "DS_SIGNATUREVERSION")
     public String getDs_SignatureVersion() {
@@ -50,7 +38,7 @@ public class MessageOrderNoCESRequest {
 
         String ds_signature = "";
         try {
-            ds_signature = apiWsMacSha256.createMerchantSignatureHostToHost(claveSecreta, XMLUtil.toRedsysXML(orderNoCES));
+            ds_signature = apiWsMacSha256.createMerchantSignatureHostToHost(EasyredsysUtil.getSecretyKey(orderNoCES), XMLUtil.toRedsysXML(orderNoCES));
         } catch (UnsupportedEncodingException | InvalidKeyException | IllegalBlockSizeException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | BadPaddingException | NoSuchPaddingException e) {
             _log.log(Level.WARNING, e.getMessage(), e);
         }
@@ -67,77 +55,22 @@ public class MessageOrderNoCESRequest {
         this.orderNoCES = orderNoCES;
     }
 
-    @XmlTransient
-    public boolean isTestMode() {
-        return testMode;
-    }
-
-    public void setTestMode(boolean testMode) {
-        this.testMode = testMode;
-    }
 
     @XmlTransient
     public String getRedsysUrl() {
-        if (testMode) {
-            return RedsysAddresses.getWebserviceURL("test");
-        } else {
-            return RedsysAddresses.getWebserviceURL("pro");
-        }
-    }
-
-    @XmlTransient
-    public String getClaveSecreta() {
-        return claveSecreta;
-    }
-
-    public void setClaveSecreta(String claveSecreta) {
-        this.claveSecreta = claveSecreta;
+        return EasyredsysUtil.getWebserviceURL(orderNoCES.getAppConfig().isTestMode());
     }
 
     public static class Builder {
         private OrderNoCES orderNoCES;
-        private String claveSecreta;
-        private boolean testMode;
 
-        public Builder() {}
-
-        public Builder(Class<? extends AppConfig> userActionClass) {
-            try {
-                AppConfig appConfig = userActionClass.newInstance();
-
-                this.claveSecreta = appConfig.getSecretKey();
-                this.testMode = appConfig.isTestMode();
-
-                if (testMode) {
-                    this.claveSecreta = "sq7HjrUOBfKmC576ILgskD5srU870gJ7";
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public Builder withOrder(OrderNoCES orderNoCES) {
+        public Builder(OrderNoCES orderNoCES) {
             this.orderNoCES = orderNoCES;
-            return this;
-        }
-
-        public Builder secretKey(String claveSecreta) {
-            this.claveSecreta = claveSecreta;
-            return this;
-        }
-
-        public Builder testMode(boolean testMode) {
-            this.testMode = testMode;
-            return this;
         }
 
         public MessageOrderNoCESRequest build() {
             MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest();
-            messageOrderNoCESRequest.setClaveSecreta(claveSecreta);
             messageOrderNoCESRequest.setOrderNoCES(orderNoCES);
-            messageOrderNoCESRequest.setTestMode(testMode);
 
             return messageOrderNoCESRequest;
         }

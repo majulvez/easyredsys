@@ -6,6 +6,7 @@ import com.miguelangeljulvez.easyredsys.client.util.TransactionType;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -46,6 +47,23 @@ public class OrderNoCES extends Order {
         apiMacSha256.setParameter("DS_MERCHANT_EXPIRYDATE", ds_merchant_expirydate);
     }
 
+    @XmlElement(name = "DS_MERCHANT_TITULAR")
+    public String getDs_merchant_titular() {
+        return null;
+    }
+
+    @XmlElement(name = "DS_MERCHANT_MERCHANTDATA")
+    public String getDs_merchant_merchantdata() {
+        return null;
+    }
+
+    @XmlElement(name = "DS_MERCHANT_PRODUCTDESCRIPTION")
+    public String getDs_merchant_productdescription() {
+        return null;
+    }
+
+
+
     @Override
     public String toString() {
 
@@ -68,8 +86,6 @@ public class OrderNoCES extends Order {
 
     public static class Builder {
 
-        private long merchantCode;
-        private long terminal;
         private String transactionType = "";
         private long currency;
         private String order = "";
@@ -78,29 +94,14 @@ public class OrderNoCES extends Order {
         private String cvv2 = "";
         private String expiryDate = "";
 
-        public Builder() {}
+        private AppConfig appConfig;
 
         public Builder(Class<? extends AppConfig> userActionClass) {
             try {
-                AppConfig appConfig = userActionClass.newInstance();
-
-                this.merchantCode = Long.valueOf(appConfig.getMerchantCode());
-                this.terminal = Long.valueOf(appConfig.getTerminal());
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+                this.appConfig = userActionClass.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-        }
-
-        public Builder merchantCode(final String merchantCode) {
-            this.merchantCode = Long.valueOf(merchantCode);
-            return this;
-        }
-
-        public Builder terminal(final String terminal) {
-            this.terminal = Long.valueOf(terminal);
-            return this;
         }
 
         public Builder transactionType(final TransactionType transactionType) {
@@ -140,8 +141,8 @@ public class OrderNoCES extends Order {
 
         public OrderNoCES build() {
             OrderNoCES orderNoCES =  new OrderNoCES();
-            orderNoCES.setDs_merchant_merchantcode(merchantCode);
-            orderNoCES.setDs_merchant_terminal(terminal);
+            orderNoCES.setDs_merchant_merchantcode(Long.valueOf(appConfig.getMerchantCode()));
+            orderNoCES.setDs_merchant_terminal(Long.valueOf(appConfig.getTerminal()));
             orderNoCES.setDs_merchant_transactiontype(transactionType);
             orderNoCES.setDs_merchant_currency(currency);
             orderNoCES.setDs_merchant_order(order);
@@ -149,6 +150,7 @@ public class OrderNoCES extends Order {
             orderNoCES.setDs_merchant_pan(cardNumber);
             orderNoCES.setDs_merchant_cvv2(cvv2);
             orderNoCES.setDs_merchant_expirydate(expiryDate);
+            orderNoCES.setAppConfig(appConfig);
 
             //TODO - Lanzar error de validación
 

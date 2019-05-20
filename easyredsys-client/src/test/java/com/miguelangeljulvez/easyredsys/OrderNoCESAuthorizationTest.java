@@ -31,13 +31,11 @@ public class OrderNoCESAuthorizationTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
         String codigo = null;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -60,14 +58,12 @@ public class OrderNoCESAuthorizationTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -83,22 +79,20 @@ public class OrderNoCESAuthorizationTest {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = createOperation();
 
-        OrderNoCESConfirmation orderNoCES = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCES = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getNotificationNoCES())
                 .transactionType(TransactionType.CONFIRMACION_AUTORIZACION_DIFERIDO)
-                .order(messageOrderNoCESResponse.getOperationNoCES().getDs_Order())
+                .order(messageOrderNoCESResponse.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .cardNumber("4548812049400004")
                 .cvv2("123")
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
        String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -114,22 +108,20 @@ public class OrderNoCESAuthorizationTest {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = createOperation();
 
-        OrderNoCESConfirmation orderNoCES = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getOperationNoCES())
+        OrderNoCESConfirmation orderNoCES = new OrderNoCESConfirmation.Builder(messageOrderNoCESResponse.getNotificationNoCES())
                 .transactionType(TransactionType.ANULACION_AUTORIZACION_DIFERIDO)
-                .order(messageOrderNoCESResponse.getOperationNoCES().getDs_Order())
+                .order(messageOrderNoCESResponse.getNotificationNoCES().getDs_Order())
                 .amount(1000)
                 .cardNumber("4548812049400004")
                 .cvv2("123")
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
         String codigo;
         try {
-            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+            MessageOrderNoCESResponse response = EasyRedsysService.request(messageOrderNoCESRequest);
             codigo = response.getCodigo();
         } catch (OperationException e) {
             e.printStackTrace();
@@ -151,11 +143,9 @@ public class OrderNoCESAuthorizationTest {
                 .expiryDate("2012")
                 .build();
 
-        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(AppConfigImpl.class)
-                .withOrder(orderNoCES)
-                .build();
+        MessageOrderNoCESRequest messageOrderNoCESRequest = new MessageOrderNoCESRequest.Builder(orderNoCES).build();
 
-        return EasyRedsysService.request(messageOrderNoCESRequest, AppConfigImpl.class);
+        return EasyRedsysService.request(messageOrderNoCESRequest);
     }
 
     private String getRandomOrder() {

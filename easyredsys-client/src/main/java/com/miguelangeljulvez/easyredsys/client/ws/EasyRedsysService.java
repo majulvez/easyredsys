@@ -1,11 +1,10 @@
 package com.miguelangeljulvez.easyredsys.client.ws;
 
-import com.miguelangeljulvez.easyredsys.client.AppConfig;
 import com.miguelangeljulvez.easyredsys.client.OperationException;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderNoCESRequest;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderNoCESResponse;
 import com.miguelangeljulvez.easyredsys.client.util.ErrorCodes;
-import com.miguelangeljulvez.easyredsys.client.util.RedsysAddresses;
+import com.miguelangeljulvez.easyredsys.client.util.EasyredsysUtil;
 import com.miguelangeljulvez.easyredsys.client.util.ResponseCodes;
 import com.miguelangeljulvez.easyredsys.client.util.XMLUtil;
 import com.miguelangeljulvez.easyredsys.client.ws.client.SerClsWSEntrada;
@@ -19,29 +18,20 @@ public class EasyRedsysService {
 
     private EasyRedsysService(){}
 
-    public static synchronized MessageOrderNoCESResponse request(MessageOrderNoCESRequest messageOrderNoCESRequest, Class<? extends AppConfig> userActionClass) throws OperationException {
+    public static MessageOrderNoCESResponse request(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
 
-        AppConfig appConfig;
-        try {
-            appConfig = userActionClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            _log.log(Level.WARNING, "Error al instanciar la clase AppConfig. Debes crear una clase que implemente la interface AppConfig");
+        MessageOrderNoCESResponse messageOrderNoCESResponse = internalRequest(messageOrderNoCESRequest);
 
-            throw new OperationException("ER-2", e.getMessage());
-        }
-
-        MessageOrderNoCESResponse messageOrderNoCESResponse = request(messageOrderNoCESRequest);
-
-        appConfig.saveNotification(messageOrderNoCESResponse.getOperationNoCES());
+        messageOrderNoCESRequest.getOrderNoCES().getAppConfig().saveNotification(messageOrderNoCESResponse.getNotificationNoCES());
 
         return messageOrderNoCESResponse;
     }
 
-    protected static synchronized MessageOrderNoCESResponse request(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
+    protected static MessageOrderNoCESResponse internalRequest(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
 
         SerClsWSEntrada service;
         try {
-            URL location = new URL(RedsysAddresses.getWebserviceURL(messageOrderNoCESRequest.getRedsysUrl()));
+            URL location = new URL(EasyredsysUtil.getWebserviceURL(messageOrderNoCESRequest.getOrderNoCES().getAppConfig().isTestMode()));
             SerClsWSEntradaService serClsWSEntradaService = new SerClsWSEntradaService(location);
             service = serClsWSEntradaService.getSerClsWSEntrada();
         } catch (Exception e) {
@@ -57,13 +47,13 @@ public class EasyRedsysService {
 
         _log.log(Level.FINEST, "XML Response: " + responseServiceXML);
 
-        MessageOrderNoCESResponse messageOrderNoCESResponse = new MessageOrderNoCESResponse(responseServiceXML, messageOrderNoCESRequest.getClaveSecreta());
+        MessageOrderNoCESResponse messageOrderNoCESResponse = new MessageOrderNoCESResponse(responseServiceXML, EasyredsysUtil.getSecretyKey(messageOrderNoCESRequest.getOrderNoCES()));
 
         switch (messageOrderNoCESResponse.getCodigo()) {
             case "0":
                 break;
             default:
-                _log.log(Level.WARNING, "OperationException: Código de error");
+                _log.log(Level.WARNING, "OperationException: Código de error " + messageOrderNoCESResponse.getCodigo());
 
                 throw new OperationException(messageOrderNoCESResponse.getCodigo(), ErrorCodes.getErrorMessage(messageOrderNoCESResponse.getCodigo()));
         }
@@ -75,10 +65,10 @@ public class EasyRedsysService {
         }
 
 
-        if (!ResponseCodes.isSuccessResponse(messageOrderNoCESResponse.getOperationNoCES().getDs_Response())) {
+        if (!ResponseCodes.isSuccessResponse(messageOrderNoCESResponse.getNotificationNoCES().getDs_Response())) {
             _log.log(Level.WARNING, "OperationException: Response code de error");
 
-            throw new OperationException(messageOrderNoCESResponse.getOperationNoCES().getDs_Response(), ResponseCodes.getErrorResponseMessage(messageOrderNoCESResponse.getOperationNoCES().getDs_Response()));
+            throw new OperationException(messageOrderNoCESResponse.getNotificationNoCES().getDs_Response(), ResponseCodes.getErrorResponseMessage(messageOrderNoCESResponse.getNotificationNoCES().getDs_Response()));
         }
 
         return messageOrderNoCESResponse;
