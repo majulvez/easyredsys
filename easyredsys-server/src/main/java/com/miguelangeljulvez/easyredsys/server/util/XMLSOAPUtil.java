@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 public class XMLSOAPUtil {
 
-    public static synchronized String toRedsysXML(OrderSOAP orderSOAP) {
+    public static String toRedsysXML(OrderSOAP orderSOAP) {
 
         String msg = null;
         try {
@@ -37,7 +37,7 @@ public class XMLSOAPUtil {
         return msg;
     }
 
-    public static synchronized String toRedsysXML(NotificationSOAP notificationSOAP) {
+    public static String toRedsysXML(NotificationSOAP notificationSOAP) {
 
         String msg = null;
         try {
@@ -57,7 +57,7 @@ public class XMLSOAPUtil {
         return msg;
     }
 
-    public static synchronized String toRedsysXML(MessageOrderSOAPRequest messageOrderSOAPRequest) {
+    public static String toRedsysXML(MessageOrderSOAPRequest messageOrderSOAPRequest) {
 
         String msg = null;
         try {
@@ -77,7 +77,7 @@ public class XMLSOAPUtil {
         return msg;
     }
 
-    public static synchronized String toRedsysXML(MessageOrderSOAPResponse messageOrderSOAPResponse) {
+    public static String toRedsysXML(MessageOrderSOAPResponse messageOrderSOAPResponse) {
 
         String msg = null;
         try {
@@ -97,7 +97,7 @@ public class XMLSOAPUtil {
         return msg;
     }
 
-    public static synchronized MessageOrderSOAPRequest fromRedsysXMLNotificationSOAP(String xml) {
+    public static MessageOrderSOAPRequest fromRedsysXMLNotificationSOAP(String xml) {
 
         MessageOrderSOAPRequest messageOrderSOAPRequest = null;
         try {

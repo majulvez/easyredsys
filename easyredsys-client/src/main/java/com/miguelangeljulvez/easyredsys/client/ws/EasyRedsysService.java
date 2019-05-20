@@ -18,7 +18,7 @@ public class EasyRedsysService {
 
     private EasyRedsysService(){}
 
-    public static synchronized MessageOrderNoCESResponse request(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
+    public static MessageOrderNoCESResponse request(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
 
         MessageOrderNoCESResponse messageOrderNoCESResponse = internalRequest(messageOrderNoCESRequest);
 
@@ -27,7 +27,7 @@ public class EasyRedsysService {
         return messageOrderNoCESResponse;
     }
 
-    protected static synchronized MessageOrderNoCESResponse internalRequest(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
+    protected static MessageOrderNoCESResponse internalRequest(MessageOrderNoCESRequest messageOrderNoCESRequest) throws OperationException {
 
         SerClsWSEntrada service;
         try {
