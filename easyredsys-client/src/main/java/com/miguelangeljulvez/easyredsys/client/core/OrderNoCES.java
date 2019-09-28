@@ -104,6 +104,10 @@ public class OrderNoCES extends Order {
             }
         }
 
+        public Builder(AppConfig userActionClass) {
+            this.appConfig = userActionClass;
+        }
+
         public Builder transactionType(final TransactionType transactionType) {
             this.transactionType = transactionType.getCode();
             return this;
@@ -141,8 +145,8 @@ public class OrderNoCES extends Order {
 
         public OrderNoCES build() {
             OrderNoCES orderNoCES =  new OrderNoCES();
-            orderNoCES.setDs_merchant_merchantcode(Long.valueOf(appConfig.getMerchantCode()));
-            orderNoCES.setDs_merchant_terminal(Long.valueOf(appConfig.getTerminal()));
+            orderNoCES.setDs_merchant_merchantcode(Long.parseLong(appConfig.getMerchantCode()));
+            orderNoCES.setDs_merchant_terminal(Long.parseLong(appConfig.getTerminal()));
             orderNoCES.setDs_merchant_transactiontype(transactionType);
             orderNoCES.setDs_merchant_currency(currency);
             orderNoCES.setDs_merchant_order(order);

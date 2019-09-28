@@ -121,6 +121,7 @@ public class ErrorCodes  {
         errorCodes.put("SIS0261", "SIS0261");
         errorCodes.put("SIS0270", "SIS0270");
         errorCodes.put("SIS0274", "SIS0274");
+        errorCodes.put("SIS0334", "SIS0334");
         errorCodes.put("SIS0429", "SIS0429");
         errorCodes.put("SIS0432", "SIS0432");
         errorCodes.put("SIS0433", "SIS0433");
