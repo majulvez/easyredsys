@@ -75,21 +75,25 @@ public final class OrderNoCESRecurrence extends OrderNoCESConfirmation {
             }
         }
 
+        public Builder(AppConfig userActionClass) {
+            this.appConfig = userActionClass;
+        }
+
         public Builder(NotificationNoCES notificationNoCES) {
-            this.merchantCode = Long.valueOf(notificationNoCES.getDs_MerchantCode());
-            this.terminal = Long.valueOf(notificationNoCES.getDs_Terminal());
-            this.currency = Long.valueOf(notificationNoCES.getDs_Currency());
+            this.merchantCode = Long.parseLong(notificationNoCES.getDs_MerchantCode());
+            this.terminal = Long.parseLong(notificationNoCES.getDs_Terminal());
+            this.currency = Long.parseLong(notificationNoCES.getDs_Currency());
             this.authorisationcode = notificationNoCES.getDs_AuthorisationCode();
         }
 
 
         public Builder merchantCode(final String merchantCode) {
-            this.merchantCode = Long.valueOf(merchantCode);
+            this.merchantCode = Long.parseLong(merchantCode);
             return this;
         }
 
         public Builder terminal(final String terminal) {
-            this.terminal = Long.valueOf(terminal);
+            this.terminal = Long.parseLong(terminal);
             return this;
         }
 

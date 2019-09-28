@@ -124,6 +124,10 @@ public final class OrderCES extends Order {
             }
         }
 
+        public Builder(AppConfig userActionClass) {
+            this.appConfig = userActionClass;
+        }
+
         public Builder transactionType(final TransactionType transactionType) {
             this.transactionType = transactionType.getCode();
             return this;
@@ -135,7 +139,7 @@ public final class OrderCES extends Order {
         }
 
         public Builder consumerLanguage(final Language consumerLanguage) {
-            this.consumerLanguage = Integer.valueOf(consumerLanguage.getCode());
+            this.consumerLanguage = Integer.parseInt(consumerLanguage.getCode());
             return this;
         }
 
@@ -176,8 +180,8 @@ public final class OrderCES extends Order {
 
         public OrderCES build() {
             OrderCES orderCES =  new OrderCES();
-            orderCES.setDs_merchant_merchantcode(Long.valueOf(appConfig.getMerchantCode()));
-            orderCES.setDs_merchant_terminal(Long.valueOf(appConfig.getTerminal()));
+            orderCES.setDs_merchant_merchantcode(Long.parseLong(appConfig.getMerchantCode()));
+            orderCES.setDs_merchant_terminal(Long.parseLong(appConfig.getTerminal()));
             orderCES.setDs_merchant_transactiontype(transactionType);
             orderCES.setDs_merchant_currency(currency);
             orderCES.setDs_merchant_consumerLanguage(consumerLanguage);
