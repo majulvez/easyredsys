@@ -1,6 +1,7 @@
 package com.miguelangeljulvez.easyredsys.server.ws.axis;
 
 import com.miguelangeljulvez.easyredsys.client.AppConfig;
+import com.miguelangeljulvez.easyredsys.client.OperationException;
 import com.miguelangeljulvez.easyredsys.client.util.EasyredsysUtil;
 import com.miguelangeljulvez.easyredsys.client.util.ResponseCodes;
 import com.miguelangeljulvez.easyredsys.server.core.MessageOrderSOAPRequest;
@@ -59,16 +60,29 @@ public class InotificacionSISBindingImpl implements InotificacionSISPortType {
             throw new SecurityException(ResponseCodes.getErrorResponseMessage(messageOrderSOAPRequest.getNotificationSOAP().getDs_Response()));
         }
 
+        boolean error = false;
         if (getAppConfig() == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
             _log.log(Level.WARNING, "No hay nada que hacer con la notificación recibida");
+
+            error = true;
         } else {
-            getAppConfig().saveNotification(messageOrderSOAPRequest.getNotificationSOAP());
+            try {
+                getAppConfig().saveNotification(messageOrderSOAPRequest.getNotificationSOAP());
+            } catch (OperationException e) {
+                _log.log(Level.SEVERE, e.getMessage(), e);
+                error = true;
+            }
         }
 
         OrderSOAP orderSOAP = new OrderSOAP(messageOrderSOAPRequest.getNotificationSOAP().getDs_Order());
         orderSOAP.setDs_version("0.0");
-        orderSOAP.setDs_response_merchant("OK"); //o KO, depende
+
+        if (error) {
+            orderSOAP.setDs_response_merchant("KO");
+        } else {
+            orderSOAP.setDs_response_merchant("OK");
+        }
 
         MessageOrderSOAPResponse messageOrderSOAPResponse = new MessageOrderSOAPResponse(orderSOAP, clave);
 
@@ -99,7 +113,7 @@ public class InotificacionSISBindingImpl implements InotificacionSISPortType {
         return remoteAddr;
     }
 
-    private AppConfig getAppConfig() {
+    protected AppConfig getAppConfig() {
 
         if (appConfig == null) {
 
@@ -125,6 +139,10 @@ public class InotificacionSISBindingImpl implements InotificacionSISPortType {
         }
 
         return appConfig;
+    }
+
+    protected void setAppConfig(AppConfig appConfig) {
+        this.appConfig = appConfig;
     }
 
     private static final Logger _log = Logger.getLogger(InotificacionSISBindingImpl.class.getName());
