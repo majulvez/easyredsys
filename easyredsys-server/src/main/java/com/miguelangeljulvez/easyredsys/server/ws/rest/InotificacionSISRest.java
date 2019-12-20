@@ -2,6 +2,7 @@ package com.miguelangeljulvez.easyredsys.server.ws.rest;
 
 
 import com.miguelangeljulvez.easyredsys.client.AppConfig;
+import com.miguelangeljulvez.easyredsys.client.OperationException;
 import com.miguelangeljulvez.easyredsys.client.core.MessageOrderCESResponse;
 import com.miguelangeljulvez.easyredsys.client.util.EasyredsysUtil;
 import com.miguelangeljulvez.easyredsys.client.util.ResponseCodes;
@@ -67,17 +68,29 @@ public class InotificacionSISRest {
             throw new SecurityException(ResponseCodes.getErrorResponseMessage(messageOrderCESResponse.getOperationCES().getDs_Response()));
         }
 
+        boolean error = false;
         if (getAppConfig() == null) {
             _log.log(Level.WARNING, "El bean con los datos de la pasarela no se ha inyectado. Debes crear una clase que implemente la interface AppConfig");
             _log.log(Level.WARNING, "No hay nada que hacer con la notificación recibida");
+
+            error = true;
         } else {
-            getAppConfig().saveNotification(messageOrderCESResponse.getOperationCES());
+            try {
+                getAppConfig().saveNotification(messageOrderCESResponse.getOperationCES());
+            } catch (OperationException e) {
+                _log.log(Level.SEVERE, e.getMessage(), e);
+                error = true;
+            }
         }
 
-        return Response.status(200).build();
+        if (error) {
+            return Response.status(400).build();
+        } else {
+            return Response.status(200).build();
+        }
     }
 
-    private AppConfig getAppConfig() {
+    protected AppConfig getAppConfig() {
 
         if (appConfig == null) {
 
@@ -103,6 +116,10 @@ public class InotificacionSISRest {
         }
 
         return appConfig;
+    }
+
+    protected void setAppConfig(AppConfig appConfig) {
+        this.appConfig = appConfig;
     }
 
     private static final Logger _log = Logger.getLogger(InotificacionSISRest.class.getName());

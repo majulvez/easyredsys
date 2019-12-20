@@ -9,5 +9,5 @@ public interface AppConfig {
     String getSecretKey();
     boolean isTestMode();
 
-    void saveNotification(Notification notification);
+    void saveNotification(Notification notification) throws OperationException;
 }

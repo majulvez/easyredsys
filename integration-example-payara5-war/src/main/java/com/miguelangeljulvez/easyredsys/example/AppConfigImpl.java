@@ -1,6 +1,7 @@
 package com.miguelangeljulvez.easyredsys.example;
 
 import com.miguelangeljulvez.easyredsys.client.AppConfig;
+import com.miguelangeljulvez.easyredsys.client.OperationException;
 import com.miguelangeljulvez.easyredsys.client.core.Notification;
 
 import javax.inject.Named;
@@ -24,7 +25,7 @@ public class AppConfigImpl implements AppConfig {
     public boolean isTestMode() { return true;}
 
     @Override
-    public void saveNotification(Notification notification) {
+    public void saveNotification(Notification notification)  throws OperationException {
         _log.info("OLEEEEEÉ - Si puedes leer esto es que todo ha ido bien");
 
         // Pon aquí lo que quieras hacer con la notificación recibida
