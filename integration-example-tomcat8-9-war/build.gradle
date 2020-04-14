@@ -2,8 +2,8 @@ apply plugin: 'war'
 
 repositories {
     mavenCentral()
-    maven { url 'http://repository.jboss.org/nexus/content/groups/public' }
-    maven { url 'http://repo.gradle.org/gradle/libs-releases-local' }
+    maven { url 'https://repository.jboss.org/nexus/content/groups/public' }
+    maven { url 'https://repo.gradle.org/gradle/libs-releases-local' }
 }
 
 dependencies {
@@ -12,8 +12,8 @@ dependencies {
     compile project(':easyredsys-server')
 
     //Sustituir las anteriores dos lineas por las siguientes
-    //compile 'com.miguelangeljulvez.easyredsys:easyredsys-client:1.1.4'
-    //compile 'com.miguelangeljulvez.easyredsys:easyredsys-server:1.1.4'
+    //compile 'com.miguelangeljulvez.easyredsys:easyredsys-client:1.3.2'
+    //compile 'com.miguelangeljulvez.easyredsys:easyredsys-server:1.3.2'
 
 
     //Al usar tomcat hacen falta estas dependencias
