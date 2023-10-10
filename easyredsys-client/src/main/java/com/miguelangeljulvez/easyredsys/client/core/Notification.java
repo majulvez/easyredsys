@@ -163,6 +163,29 @@ public abstract class Notification {
         apiMacSha256.setParameter("Ds_AuthorisationCode", ds_AuthorisationCode);
     }
 
+    @XmlElement(name = "Ds_Merchant_Identifier")
+    public String getDs_MerchantIdentifier() {
+        String ds_Merchant_Identifier = "";
+        try {
+            ds_Merchant_Identifier = apiMacSha256.getParameter("Ds_Merchant_Identifier");
+        } catch (JSONException e) {
+        }
+        return ds_Merchant_Identifier;
+    }
+
+    public void setDs_MerchantIdentifier(String ds_Merchant_Identifier) {
+        apiMacSha256.setParameter("Ds_Merchant_Identifier", ds_Merchant_Identifier);
+    }
+
+    @XmlElement(name = "Ds_ExpiryDate")
+    public String getDs_ExpiryDate() {
+        return apiMacSha256.getParameter("Ds_ExpiryDate");
+    }
+
+    public void setDs_ExpiryDate(String ds_ExpiryDate) {
+        apiMacSha256.setParameter("Ds_ExpiryDate", ds_ExpiryDate);
+    }
+
     @XmlElement(name = "Ds_TransactionType")
     public String getDs_TransactionType() {
         String ds_TransactionType = "";
@@ -259,6 +282,20 @@ public abstract class Notification {
         apiMacSha256.setParameter("Ds_Card_Type", ds_Card_Type);
     }
 
+    @XmlElement(name="Ds_Card_Brand")
+    public String getDs_Card_Brand() {
+        String ds_card_brand = "";
+        try {
+            ds_card_brand = apiMacSha256.getParameter("Ds_Card_Brand");
+        } catch (JSONException e) {}
+        return ds_card_brand;
+    }
+
+    public void setDs_Card_Brand(String ds_card_brand) {
+        apiMacSha256.setParameter("Ds_Card_Brand", ds_card_brand);
+    }
+
+
     @XmlElement(name = "epochTime")
     public long getEpochTime() {
 
@@ -314,6 +351,12 @@ public abstract class Notification {
         sb.append(System.lineSeparator());
         sb.append("Ds_MerchantData:");
         sb.append(getDs_MerchantData());
+        sb.append(System.lineSeparator());
+        sb.append("Ds_MerchantIdentifier:");
+        sb.append(getDs_MerchantIdentifier());
+        sb.append(System.lineSeparator());
+        sb.append("Ds_ExpiryDate:");
+        sb.append(getDs_ExpiryDate());
         sb.append(System.lineSeparator());
         sb.append("Ds_Terminal:");
         sb.append(getDs_Terminal());

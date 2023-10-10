@@ -104,6 +104,7 @@ public final class OrderCES extends Order {
     public static class Builder {
 
         private String transactionType;
+        private String identifier;
         private long currency;
         private int consumerLanguage;
         private String order;
@@ -135,6 +136,11 @@ public final class OrderCES extends Order {
 
         public Builder currency(final Currency currency) {
             this.currency = currency.getISOCodeNumeric();
+            return this;
+        }
+
+        public Builder identifier(final String identifier) {
+            this.identifier = identifier;
             return this;
         }
 
@@ -184,6 +190,7 @@ public final class OrderCES extends Order {
             orderCES.setDs_merchant_terminal(Long.parseLong(appConfig.getTerminal()));
             orderCES.setDs_merchant_transactiontype(transactionType);
             orderCES.setDs_merchant_currency(currency);
+            orderCES.setDs_merchant_identifier(identifier);
             orderCES.setDs_merchant_consumerLanguage(consumerLanguage);
             orderCES.setDs_merchant_order(order);
             orderCES.setDs_merchant_amount(amount);
